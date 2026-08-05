@@ -140,7 +140,15 @@ function Hero() {
     <motion.div className="hero-art hero-art-left" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>
-      <p className="eyebrow">FOR BUSINESS OWNERS, FOUNDERS, AND ENTREPRENEURS</p>
+      <motion.p
+        className="eyebrow eyebrow-reveal"
+        aria-label="For Business Owners, Founders, and Entrepreneurs"
+        initial={{ opacity: 0, y: 12, letterSpacing: '0.32em' }}
+        animate={{ opacity: 1, y: 0, letterSpacing: '0.22em' }}
+        transition={{ delay: .45, duration: .8, ease: 'easeOut' }}
+      >
+        <span>FOR BUSINESS OWNERS, FOUNDERS, AND ENTREPRENEURS</span>
+      </motion.p>
       <h1>We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Automatically</h1>
       <motion.p className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
       <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline>Explore Our Insights</Button></div>
@@ -238,6 +246,11 @@ function Advantage() {
       }
     }, { threshold: 0.2 });
     observer.observe(node);
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+      setHasEntered(true);
+      observer.disconnect();
+    }
     return () => observer.disconnect();
   }, []);
 
@@ -271,8 +284,9 @@ function Advantage() {
       <motion.div className="advantage-heading-row" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .7, ease: 'easeOut' }}>
         <div>
           <p className="section-label">XNR Advantage</p>
-          <h2 className={`advantage-typing ${typedHeadline.length < advantageHeadline.length ? 'is-typing' : ''}`} aria-label={advantageHeadline}>
-            <span aria-hidden="true">{typedHeadline}</span>
+          <h2 className={`advantage-typing ${typedHeadline.length < advantageHeadline.length ? 'is-typing' : 'is-complete'}`} aria-label={advantageHeadline}>
+            <span className="sr-only">{advantageHeadline}</span>
+            <span className="advantage-typing-text" aria-hidden="true">{typedHeadline || ' '}</span>
           </h2>
           <p className="section-copy">We design the logic before the code — so every system we build solves a real business problem.</p>
         </div>
