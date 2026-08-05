@@ -219,11 +219,83 @@ function Projects() {
 }
 
 function Advantage() {
-  return <motion.section className="section advantage" id="services" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .8 }}><p className="section-label">XNR Advantage</p><h2>Not just developers. We think like business owners.</h2><p className="section-copy">We design the logic before the code — so every system we build solves a real business problem.</p><div className="advantage-grid">{[['Results-Focused Execution', 'Solve real operational problems.'], ['End-to-End Ownership', 'From idea to deployment.'], ['Long-Term Partner Mindset', 'Not a one-off dev shop.'], ['Scalable Growth', 'Future-proof systems built to scale with you.']].map(([title, body], index) => <motion.article className="adv-card" key={title} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{body}</p></motion.article>)}</div></motion.section>;
+  const advantageHeadline = 'Not just developers. We think like business owners.';
+  const [typedHeadline, setTypedHeadline] = useState('');
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      setTypedHeadline(advantageHeadline);
+      return undefined;
+    }
+
+    let character = 0;
+    const timer = window.setInterval(() => {
+      character += 1;
+      setTypedHeadline(advantageHeadline.slice(0, character));
+      if (character >= advantageHeadline.length) window.clearInterval(timer);
+    }, 34);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const principles = [
+    ['Results-Focused Execution', 'Solve real operational problems.'],
+    ['End-to-End Ownership', 'From idea to deployment.'],
+    ['Long-Term Partner Mindset', 'Not a one-off dev shop.'],
+    ['Scalable Growth', 'Future-proof systems built to scale with you.'],
+  ];
+
+  return <motion.section className="section advantage" id="services" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .8 }}>
+    <div className="advantage-inner">
+      <motion.div className="advantage-heading-row" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .7, ease: 'easeOut' }}>
+        <div>
+          <p className="section-label">XNR Advantage</p>
+          <h2 className={`advantage-typing ${typedHeadline.length < advantageHeadline.length ? 'is-typing' : ''}`} aria-label={advantageHeadline}>
+            <span aria-hidden="true">{typedHeadline}</span>
+          </h2>
+          <p className="section-copy">We design the logic before the code — so every system we build solves a real business problem.</p>
+        </div>
+        <aside className="advantage-aside" aria-label="XNR operating principle">
+          <span>01 / 04</span>
+          <strong>Business logic first</strong>
+          <p>Every build starts with the outcome your team needs, not the technology we want to use.</p>
+        </aside>
+      </motion.div>
+      <motion.span className="advantage-scanline" initial={{ scaleX: 0, opacity: 0 }} whileInView={{ scaleX: 1, opacity: 1 }} viewport={{ once: true, amount: .2 }} transition={{ delay: .35, duration: 1.1, ease: 'easeInOut' }} aria-hidden="true" />
+      <div className="advantage-grid">
+        {principles.map(([title, body], index) => <motion.article className="adv-card" key={title} initial={{ opacity: 0, y: 30, rotateX: 5 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .6, delay: .12 + index * .12, ease: 'easeOut' }} whileHover={{ y: -6 }}>
+          <div className="adv-card-top"><span className="adv-card-index">0{index + 1}</span><span className="adv-card-rule" /></div>
+          <div className="adv-card-content"><h3>{title}</h3><p>{body}</p></div>
+        </motion.article>)}
+      </div>
+      <div className="advantage-footer"><span>One partner from strategy to scale</span><span className="advantage-footer-arrow">↗</span></div>
+    </div>
+  </motion.section>;
 }
 
 function Footer() {
-  return <><motion.section className="section partners" id="partners" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}><p className="section-label">Partners</p><h2>Our Partners & Clients</h2><p className="section-copy">Trusted by forward-thinking businesses across industries.</p><div className="partner-marquee"><div className="partner-track">{[...partners, ...partners].map((partner, index) => <span key={`${partner}-${index}`}>{partner}</span>)}</div></div></motion.section><motion.section className="cta" id="contact" initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: 'easeOut' }}><h2>Let’s build a system that powers your growth.</h2><p>Custom software and automation engineered around how your business runs.</p><Button>Build Better Together</Button></motion.section><footer className="footer" aria-label="XNR IT Solutions site footer"><div className="footer-brand"><div className="footer-logo"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></div><p> XNR IT Solutions builds custom software, business systems, and workflow automation that help growing companies operate more efficiently.</p><h4>Follow XNR IT Solutions</h4><div className="socials"><a href="https://www.facebook.com" aria-label="XNR IT Solutions on Facebook">f</a><a href="https://www.instagram.com" aria-label="XNR IT Solutions on Instagram">ig</a><a href="https://www.tiktok.com" aria-label="XNR IT Solutions on TikTok">♪</a><a href="https://api.whatsapp.com/send?phone=639667964414" aria-label="Contact XNR IT Solutions on WhatsApp">wa</a></div></div><div className="footer-column"><h4>Company</h4><a href="#about">About XNR</a><a href="#about">Our Approach</a><a href="#services">Business Solutions</a><a href="#contact">Careers</a></div><div className="footer-column"><h4>Services</h4><a href="#services">Business Process Automation</a><a href="#services">CRM & Sales Automation</a><a href="#services">Inventory Systems</a><a href="#services">Custom Software Development</a><a href="#services">Internal Dashboards</a></div><div className="footer-column"><h4>Industries & Projects</h4><a href="#projects">E-commerce Systems</a><a href="#projects">Client Portals</a><a href="#projects">Operations Dashboards</a><a href="#projects">Enterprise Resource Planning</a><a href="#partners">Partners & Clients</a></div><div className="footer-bottom"><span>© 2026 XNR IT Solutions. All rights reserved.</span><span><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></span></div><div className="footer-watermark">XNR</div></footer></>;
+  const footerRef = useRef(null);
+  const { scrollYProgress: footerProgress } = useScroll({ target: footerRef, offset: ['start end', 'start start'] });
+  const ctaOpacity = useTransform(footerProgress, [0, .42, .82, 1], [1, 1, .42, 0]);
+
+  return <>
+    <motion.section className="section partners" id="partners" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}><p className="section-label">Partners</p><h2>Our Partners & Clients</h2><p className="section-copy">Trusted by forward-thinking businesses across industries.</p><div className="partner-marquee"><div className="partner-track">{[...partners, ...partners].map((partner, index) => <span key={`${partner}-${index}`}>{partner}</span>)}</div></div></motion.section>
+    <motion.section className="cta" id="contact" aria-labelledby="cta-title" style={{ opacity: ctaOpacity }} initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: 'easeOut' }}>
+      <div className="cta-orbit cta-orbit-one" aria-hidden="true" />
+      <div className="cta-orbit cta-orbit-two" aria-hidden="true" />
+      <div className="cta-inner">
+        <p className="section-label">Ready to move faster?</p>
+        <h2 id="cta-title">Let’s build a system that <span>powers your growth.</span></h2>
+        <p>Get custom software, business systems, and workflow automation engineered around how your business runs.</p>
+        <div className="cta-actions"><a className="btn btn-primary" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a><span>Strategy <i /> Systems <i /> Automation</span></div>
+        <div className="cta-meta"><span><b /> Business-first planning</span><span><b /> Built to scale</span><span><b /> Human support</span></div>
+      </div>
+    </motion.section>
+    <footer ref={footerRef} className="footer" aria-label="XNR IT Solutions site footer">
+      <div className="footer-brand"><div className="footer-logo"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></div><p> XNR IT Solutions builds custom software, business systems, and workflow automation that help growing companies operate more efficiently.</p><h4>Follow XNR IT Solutions</h4><div className="socials"><a href="https://www.facebook.com" aria-label="XNR IT Solutions on Facebook">f</a><a href="https://www.instagram.com" aria-label="XNR IT Solutions on Instagram">ig</a><a href="https://www.tiktok.com" aria-label="XNR IT Solutions on TikTok">♪</a><a href="https://api.whatsapp.com/send?phone=639667964414" aria-label="Contact XNR IT Solutions on WhatsApp">wa</a></div></div><div className="footer-column"><h4>Company</h4><a href="#about">About XNR</a><a href="#about">Our Approach</a><a href="#services">Business Solutions</a><a href="#contact">Careers</a></div><div className="footer-column"><h4>Services</h4><a href="#services">Business Process Automation</a><a href="#services">CRM & Sales Automation</a><a href="#services">Inventory Systems</a><a href="#services">Custom Software Development</a><a href="#services">Internal Dashboards</a></div><div className="footer-column"><h4>Industries & Projects</h4><a href="#projects">E-commerce Systems</a><a href="#projects">Client Portals</a><a href="#projects">Operations Dashboards</a><a href="#projects">Enterprise Resource Planning</a><a href="#partners">Partners & Clients</a></div><div className="footer-bottom"><span>© 2026 XNR IT Solutions. All rights reserved.</span><span><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></span></div><div className="footer-watermark">XNR</div>
+    </footer>
+  </>;
 }
 
 export default function App() {
