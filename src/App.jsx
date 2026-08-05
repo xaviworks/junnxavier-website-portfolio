@@ -10,7 +10,9 @@ const projects = [
   ['04', 'Workflow automation', 'Connected processes that reduce manual work and keep teams moving.'],
   ['05', 'CRM & sales systems', 'Better lead management, faster follow-up, and clearer customer journeys.'],
 ];
-const loopedProjects = [...projects, ...projects, ...projects];
+// Keep several copies in the track so the gallery can travel in either
+// direction for a long time before it has to normalize its index.
+const loopedProjects = Array.from({ length: 7 }, () => projects).flat();
 
 function Button({ children, outline = false, href = '#contact' }) {
   return <a className={`btn ${outline ? 'btn-secondary' : 'btn-primary'}`} href={href}>{children}</a>;
@@ -156,26 +158,43 @@ function IntroSection() {
 }
 
 function Projects() {
-  const [activeIndex, setActiveIndex] = useState(projects.length);
+  const loopStart = projects.length * 2;
+  const loopEnd = projects.length * 5;
+  const [activeIndex, setActiveIndex] = useState(projects.length * 3);
   const [trackX, setTrackX] = useState(0);
   const galleryRef = useRef(null);
-  const firstProjectRef = useRef(null);
-  const move = useCallback((direction) => setActiveIndex((current) => current + direction), []);
+  const trackInnerRef = useRef(null);
+  const move = useCallback((direction) => setActiveIndex((current) => {
+    const next = current + direction;
+    if (next < loopStart) return loopEnd - 1;
+    if (next >= loopEnd) return loopStart;
+    return next;
+  }), []);
   useEffect(() => {
     const timer = window.setInterval(() => move(1), 3000);
     return () => window.clearInterval(timer);
   }, [move]);
   useLayoutEffect(() => {
+    let frame;
     const updateTrackPosition = () => {
       const viewport = galleryRef.current;
-      const firstProject = firstProjectRef.current;
-      if (!viewport || !firstProject) return;
-      setTrackX(viewport.clientWidth / 2 - (firstProject.offsetLeft + firstProject.offsetWidth / 2));
+      const track = trackInnerRef.current;
+      const activeProject = track?.querySelector(`[data-carousel-index="${activeIndex}"]`);
+      if (!viewport || !track || !activeProject) return;
+
+      // offsetLeft is measured in the un-transformed track coordinate system.
+      // That keeps the target stable while Motion animates the track itself.
+      const activeCenter = activeProject.offsetLeft + activeProject.offsetWidth / 2;
+      setTrackX(viewport.clientWidth / 2 - activeCenter);
     };
-    updateTrackPosition();
+    frame = window.requestAnimationFrame(updateTrackPosition);
     const observer = new ResizeObserver(updateTrackPosition);
     if (galleryRef.current) observer.observe(galleryRef.current);
-    return () => observer.disconnect();
+    if (trackInnerRef.current) observer.observe(trackInnerRef.current);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [activeIndex]);
 
   return <motion.section className="section projects" id="projects" initial={{ opacity: 0, y: 64 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .7, ease: 'easeOut' }}>
@@ -185,17 +204,17 @@ function Projects() {
     <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
     <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
       <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous project" onClick={() => move(-1)}>‹</button>
-      <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div className="gallery-track-inner" initial={false} animate={{ x: trackX }} onAnimationComplete={() => { if (activeIndex >= projects.length * 2) setActiveIndex(projects.length); }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map(([number, title, body], index) => {
+      <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map(([number, title, body], index) => {
         const leftIndex = activeIndex - 1;
         const rightIndex = activeIndex + 1;
-        return <motion.article ref={index === activeIndex ? firstProjectRef : undefined} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={number}>
+        return <motion.article data-carousel-index={index} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={`${number}-${index}`}>
           <div className="gallery-project-art" aria-hidden="true"><span className="gallery-window-dots"><i></i><i></i><i></i></span><span className="gallery-art-line line-one"></span><span className="gallery-art-line line-two"></span><span className="gallery-art-block block-one"></span><span className="gallery-art-block block-two"></span><span className="gallery-art-block block-three"></span></div>
           <div className="gallery-project-content"><div className="gallery-project-meta"><span>{number}</span><small>Case study</small><ArrowUpRight size={17} strokeWidth={2.2} /></div><h3>{title}</h3><p>{body}</p></div>
         </motion.article>;
       })}</motion.div></div>
       <button className="gallery-arrow gallery-next" type="button" aria-label="Next project" onClick={() => move(1)}>›</button>
     </div>
-    <div className="gallery-dots" aria-label="Choose a project">{projects.map(([number], index) => <button key={number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => setActiveIndex(projects.length + index)} />)}</div>
+    <div className="gallery-dots" aria-label="Choose a project">{projects.map(([number], index) => <button key={number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => setActiveIndex(loopStart + index)} />)}</div>
   </motion.section>;
 }
 
