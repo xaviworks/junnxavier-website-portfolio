@@ -162,7 +162,7 @@ function Hero() {
 }
 
 function IntroSection() {
-  return <motion.section className="section intro" id="about" aria-labelledby="about-title" aria-describedby="about-description" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .65, ease: 'easeOut' }}><div className="intro-heading"><div><p className="section-label">Build</p><h2 id="about-title">What we <span>do?</span></h2><p className="section-copy" id="about-description">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Problem</strong><p>Disconnected tools and manual tasks create friction that slows your business down.</p></aside></div><div className="work-surface"><div className="work-toolbar"><div className="work-year"><button aria-label="Previous year">‹</button><span>2026</span><button aria-label="Next year">›</button></div><div className="work-address">◉ <span>https://xnr-it-solutions.com/</span></div><div className="work-tools"><i>✦</i><i>×</i></div></div><div className="work-status"><b>Building Success</b><span>●</span></div><div className="work-canvas"><div className="work-search"><span>⌕</span><em>Search your next improvement</em></div><div className="work-empty"><span>Every workflow starts with a clearer system.</span></div></div></div></motion.section>;
+  return <motion.section className="section intro" id="about" aria-labelledby="about-title" aria-describedby="about-description" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .18 }} transition={{ duration: .65, ease: 'easeOut' }}><div className="intro-heading"><div><p className="section-label">Build</p><h2 id="about-title">What we <span>do?</span></h2><p className="section-copy" id="about-description">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Problem</strong><p>Disconnected tools and manual tasks create friction that slows your business down.</p></aside></div><div className="work-surface"><div className="work-toolbar"><div className="work-year"><button aria-label="Previous year">‹</button><span>2026</span><button aria-label="Next year">›</button></div><div className="work-address">◉ <span>https://xnr-it-solutions.com/</span></div><div className="work-tools"><i>✦</i><i>×</i></div></div><div className="work-status"><b>Building Success</b><span>●</span></div><div className="work-canvas"><div className="work-search"><span>⌕</span><em>Search your next improvement</em></div><div className="work-empty"><span>Every workflow starts with a clearer system.</span></div></div></div></motion.section>;
 }
 
 function Projects() {
@@ -205,11 +205,11 @@ function Projects() {
     };
   }, [activeIndex]);
 
-  return <motion.section className="section projects" id="projects" initial={{ opacity: 0, y: 64 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .7, ease: 'easeOut' }}>
+  return <motion.section className="section projects" id="projects" initial={{ opacity: 0, y: 64 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .12 }} transition={{ duration: .7, ease: 'easeOut' }}>
     <p className="section-label">Projects</p>
     <h2>Let’s Build a System That Powers Your Growth</h2>
     <p className="section-copy">Custom software and automation, engineered around how your business runs.</p>
-    <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
+    <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
     <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
       <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous project" onClick={() => move(-1)}>‹</button>
       <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map(([number, title, body], index) => {
@@ -229,33 +229,34 @@ function Projects() {
 function Advantage() {
   const advantageHeadline = 'Not just developers. We think like business owners.';
   const advantageRef = useRef(null);
-  const [hasEntered, setHasEntered] = useState(false);
+  const wasAdvantageVisible = useRef(false);
+  const [typingRun, setTypingRun] = useState(0);
   const [typedHeadline, setTypedHeadline] = useState('');
 
   useEffect(() => {
     const node = advantageRef.current;
     if (!node) return undefined;
     if (!('IntersectionObserver' in window)) {
-      setHasEntered(true);
+      setTypingRun(1);
       return undefined;
     }
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setHasEntered(true);
-        observer.disconnect();
+      if (entry.isIntersecting && !wasAdvantageVisible.current) {
+        setTypingRun((run) => run + 1);
       }
+      wasAdvantageVisible.current = entry.isIntersecting;
     }, { threshold: 0.2 });
     observer.observe(node);
     const rect = node.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
-      setHasEntered(true);
-      observer.disconnect();
+      wasAdvantageVisible.current = true;
+      setTypingRun(1);
     }
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!hasEntered) return undefined;
+    if (!typingRun) return undefined;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
       setTypedHeadline(advantageHeadline);
@@ -263,6 +264,7 @@ function Advantage() {
     }
 
     let character = 0;
+    setTypedHeadline('');
     const timer = window.setInterval(() => {
       character += 1;
       setTypedHeadline(advantageHeadline.slice(0, character));
@@ -270,7 +272,7 @@ function Advantage() {
     }, 34);
 
     return () => window.clearInterval(timer);
-  }, [hasEntered]);
+  }, [typingRun]);
 
   const principles = [
     ['Results-Focused Execution', 'Solve real operational problems.'],
@@ -279,9 +281,9 @@ function Advantage() {
     ['Scalable Growth', 'Future-proof systems built to scale with you.'],
   ];
 
-  return <motion.section ref={advantageRef} className="section advantage" id="services" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .8 }}>
+  return <motion.section ref={advantageRef} className="section advantage" id="services" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false, amount: .12 }} transition={{ duration: .8 }}>
     <div className="advantage-inner">
-      <motion.div className="advantage-heading-row" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .7, ease: 'easeOut' }}>
+      <motion.div className="advantage-heading-row" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .25 }} transition={{ duration: .7, ease: 'easeOut' }}>
         <div>
           <p className="section-label">XNR Advantage</p>
           <h2 className={`advantage-typing ${typedHeadline.length < advantageHeadline.length ? 'is-typing' : 'is-complete'}`} aria-label={advantageHeadline}>
@@ -296,7 +298,7 @@ function Advantage() {
           <p>Every build starts with the outcome your team needs, not the technology we want to use.</p>
         </aside>
       </motion.div>
-      <motion.span className="advantage-scanline" initial={{ scaleX: 0, opacity: 0 }} whileInView={{ scaleX: 1, opacity: 1 }} viewport={{ once: true, amount: .2 }} transition={{ delay: .35, duration: 1.1, ease: 'easeInOut' }} aria-hidden="true" />
+      <motion.span className="advantage-scanline" initial={{ scaleX: 0, opacity: 0 }} whileInView={{ scaleX: 1, opacity: 1 }} viewport={{ once: false, amount: .2 }} transition={{ delay: .35, duration: 1.1, ease: 'easeInOut' }} aria-hidden="true" />
       <div className="advantage-grid">
         {principles.map(([title, body], index) => <motion.article className="adv-card" key={title} initial={{ opacity: 0, x: index % 2 === 0 ? -90 : 90, y: 18, rotateX: 4 }} whileInView={{ opacity: 1, x: 0, y: 0, rotateX: 0 }} viewport={{ once: false, amount: .22 }} transition={{ duration: 1.15, delay: .18 + index * .16, ease: [0.22, 1, 0.36, 1] }} whileHover={{ y: -6 }}>
           <div className="adv-card-top"><span className="adv-card-index">0{index + 1}</span><span className="adv-card-rule" /></div>
@@ -310,7 +312,7 @@ function Advantage() {
 
 function Footer() {
   return <>
-    <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
+    <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <div className="partners-heading">
         <p className="section-label">Partners</p>
         <h2 id="partners-title">Our Partners &amp; Clients</h2>
