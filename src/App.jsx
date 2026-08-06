@@ -136,7 +136,7 @@ function Hero() {
   const { scrollY } = useScroll();
   const heroBlur = useTransform(scrollY, [0, 520], ['blur(0px)', 'blur(7px)']);
   const heroOpacity = useTransform(scrollY, [0, 520], [1, .2]);
-  return <motion.section className="hero" id="home" style={{ filter: heroBlur, opacity: heroOpacity }}>
+  return <motion.section className="hero" id="home" aria-labelledby="hero-title" aria-describedby="hero-description" style={{ filter: heroBlur, opacity: heroOpacity }}>
     <motion.div className="hero-art hero-art-left" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>
@@ -149,8 +149,8 @@ function Hero() {
       >
         <span>FOR BUSINESS OWNERS, FOUNDERS, AND ENTREPRENEURS</span>
       </motion.p>
-      <h1>We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Automatically</h1>
-      <motion.p className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
+      <h1 id="hero-title">We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Automatically</h1>
+      <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
       <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline>Explore Our Insights</Button></div>
     </motion.div>
     <div className="hero-art hero-art-deadline"><DeadlineWidget /></div>
@@ -162,7 +162,7 @@ function Hero() {
 }
 
 function IntroSection() {
-  return <motion.section className="section intro" id="about" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .65, ease: 'easeOut' }}><div className="intro-heading"><div><p className="section-label">Build</p><h2>What we <span>do?</span></h2><p className="section-copy">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Problem</strong><p>Disconnected tools and manual tasks create friction that slows your business down.</p></aside></div><div className="work-surface"><div className="work-toolbar"><div className="work-year"><button aria-label="Previous year">‹</button><span>2026</span><button aria-label="Next year">›</button></div><div className="work-address">◉ <span>https://xnr-it-solutions.com/</span></div><div className="work-tools"><i>✦</i><i>×</i></div></div><div className="work-status"><b>Building Success</b><span>●</span></div><div className="work-canvas"><div className="work-search"><span>⌕</span><em>Search your next improvement</em></div><div className="work-empty"><span>Every workflow starts with a clearer system.</span></div></div></div></motion.section>;
+  return <motion.section className="section intro" id="about" aria-labelledby="about-title" aria-describedby="about-description" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .65, ease: 'easeOut' }}><div className="intro-heading"><div><p className="section-label">Build</p><h2 id="about-title">What we <span>do?</span></h2><p className="section-copy" id="about-description">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Problem</strong><p>Disconnected tools and manual tasks create friction that slows your business down.</p></aside></div><div className="work-surface"><div className="work-toolbar"><div className="work-year"><button aria-label="Previous year">‹</button><span>2026</span><button aria-label="Next year">›</button></div><div className="work-address">◉ <span>https://xnr-it-solutions.com/</span></div><div className="work-tools"><i>✦</i><i>×</i></div></div><div className="work-status"><b>Building Success</b><span>●</span></div><div className="work-canvas"><div className="work-search"><span>⌕</span><em>Search your next improvement</em></div><div className="work-empty"><span>Every workflow starts with a clearer system.</span></div></div></div></motion.section>;
 }
 
 function Projects() {
@@ -321,16 +321,25 @@ function Footer() {
         <div className="partner-track partner-track-reverse" aria-hidden="true">{[...partners.slice().reverse(), ...partners.slice().reverse()].map((partner, index) => <span key={`partner-b-${partner}-${index}`}>{partner}</span>)}</div>
       </div>
     </motion.section>
-    <motion.section className="cta" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: 'easeOut' }}>
-      <div className="cta-orbit cta-orbit-one" aria-hidden="true" />
-      <div className="cta-orbit cta-orbit-two" aria-hidden="true" />
-      <div className="cta-inner">
-        <p className="section-label">Ready to move faster?</p>
-        <h2 id="cta-title">Let’s build a system that <span>powers your growth.</span></h2>
-        <p>Get custom software, business systems, and workflow automation engineered around how your business runs.</p>
-        <div className="cta-actions"><a className="btn btn-primary" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a><span>Strategy <i /> Systems <i /> Automation</span></div>
-        <div className="cta-meta"><span><b /> Business-first planning</span><span><b /> Built to scale</span><span><b /> Human support</span></div>
+    <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: 'easeOut' }}>
+      <div className="cta-blueprint-copy">
+        <motion.p className="section-label cta-label" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .1, duration: .45 }}>Ready to move faster?</motion.p>
+        <motion.h2 id="cta-title" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .16, duration: .55 }}>Let’s build a system that <span>powers your growth.</span></motion.h2>
+        <motion.p className="cta-copy" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .22, duration: .5 }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
+        <motion.div className="cta-actions" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .28, duration: .5 }}>
+          <a className="btn btn-primary cta-button" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a>
+          <span>Strategy <i /> Systems <i /> Automation</span>
+        </motion.div>
       </div>
+      <motion.div className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business friction into working systems" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .35 }} transition={{ delay: .12, duration: .65, ease: 'easeOut' }}>
+        <div className="cta-panel-header"><div><span className="cta-panel-kicker">The XNR workflow</span><strong>From friction to flow</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
+        <ol className="cta-steps">
+          <li className="cta-step"><span className="cta-step-number">01</span><div><h3>Find the friction</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></li>
+          <li className="cta-step"><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></li>
+          <li className="cta-step"><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></li>
+        </ol>
+        <div className="cta-panel-footer"><span>One partner from strategy to scale</span><span className="cta-panel-line" aria-hidden="true"><i /></span></div>
+      </motion.div>
     </motion.section>
     <footer className="footer" aria-label="XNR IT Solutions site footer">
       <div className="footer-brand"><div className="footer-logo"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></div><p>Custom software, business systems, and workflow automation for growing businesses.</p><h4>Follow XNR IT Solutions</h4><div className="socials"><a href="https://www.facebook.com" aria-label="XNR IT Solutions on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.5 1.6-1.5h1.7V4.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.3v3h2.8v8z" /></svg></a><a href="https://www.instagram.com" aria-label="XNR IT Solutions on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="instagram-gradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#F58529" /><stop offset=".45" stopColor="#DD2A7B" /><stop offset="1" stopColor="#5E3BEA" /></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="5" fill="url(#instagram-gradient)" /><rect x="7" y="7" width="10" height="10" rx="3" fill="none" stroke="white" strokeWidth="1.7" /><circle cx="12" cy="12" r="2.5" fill="none" stroke="white" strokeWidth="1.7" /><circle cx="17.2" cy="6.8" r="1" fill="white" /></svg></a><a href="https://www.tiktok.com" aria-label="XNR IT Solutions on TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25F4EE" d="M14.6 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 12 5a8 8 0 1 0 8 8V7.6c-2-.5-3.3-1.9-3.8-4.6z" /><path fill="#FE2C55" d="M13.6 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 11 5a8 8 0 1 0 8 8V7.6C17 7.1 15.7 5.7 15.2 3z" /><path fill="white" d="M14.1 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 11.5 5a8 8 0 1 0 8 8V7.6c-2-.5-3.3-1.9-3.8-4.6z" /></svg></a><a href="https://api.whatsapp.com/send?phone=639667964414" aria-label="Contact XNR IT Solutions on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.2-4.1A8.5 8.5 0 1 1 20.5 11.5Z" fill="#25D366" /><path d="M8.5 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .4-.1.6l-.6.7c.7 1.3 1.7 2.3 3 3l.7-.6c.2-.2.4-.2.6-.1l1.9.8c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.5.3-1.2.4-1.8.2-2.1-.6-4.2-2.5-5.6-4.3-1-.9-1.8-2-2.2-3.1-.2-.7-.1-1.3.1-1.8Z" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></a></div></div><div className="footer-column"><h4>Company</h4><a href="#about">About XNR</a><a href="#about">Our Approach</a><a href="#services">Business Solutions</a><a href="#contact">Careers</a></div><div className="footer-column"><h4>Services</h4><a href="#services">Business Process Automation</a><a href="#services">CRM & Sales Automation</a><a href="#services">Inventory Systems</a><a href="#services">Custom Software Development</a><a href="#services">Internal Dashboards</a></div><div className="footer-column"><h4>Industries & Projects</h4><a href="#projects">E-commerce Systems</a><a href="#projects">Client Portals</a><a href="#projects">Operations Dashboards</a><a href="#projects">Enterprise Resource Planning</a><a href="#partners">Partners & Clients</a></div><div className="footer-bottom"><span>© 2026 XNR IT Solutions. All rights reserved.</span><span><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></span></div><div className="footer-watermark">XNR</div>
