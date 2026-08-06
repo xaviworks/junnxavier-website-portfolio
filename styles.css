@@ -770,6 +770,7 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
   margin: clamp(16px, 2vw, 28px) auto clamp(24px, 3vw, 40px);
   padding: 0;
   overflow: hidden;
+  perspective: 1400px;
   text-align: left;
   color: #102442;
   background: #f4f7fb;
@@ -787,6 +788,7 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 }
 
 .cta-blueprint-copy {
+  transform-style: preserve-3d;
   padding: clamp(24px, 2.6vw, 32px);
   background: #052146;
 }
@@ -838,6 +840,7 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 }
 
 .cta-blueprint-panel {
+  transform-style: preserve-3d;
   min-height: 100%;
   padding: clamp(20px, 2.2vw, 26px);
   background: #fff;

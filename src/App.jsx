@@ -298,7 +298,7 @@ function Advantage() {
       </motion.div>
       <motion.span className="advantage-scanline" initial={{ scaleX: 0, opacity: 0 }} whileInView={{ scaleX: 1, opacity: 1 }} viewport={{ once: true, amount: .2 }} transition={{ delay: .35, duration: 1.1, ease: 'easeInOut' }} aria-hidden="true" />
       <div className="advantage-grid">
-        {principles.map(([title, body], index) => <motion.article className="adv-card" key={title} initial={{ opacity: 0, y: 30, rotateX: 5 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .6, delay: .12 + index * .12, ease: 'easeOut' }} whileHover={{ y: -6 }}>
+        {principles.map(([title, body], index) => <motion.article className="adv-card" key={title} initial={{ opacity: 0, x: index % 2 === 0 ? -90 : 90, y: 18, rotateX: 4 }} whileInView={{ opacity: 1, x: 0, y: 0, rotateX: 0 }} viewport={{ once: false, amount: .22 }} transition={{ duration: 1.15, delay: .18 + index * .16, ease: [0.22, 1, 0.36, 1] }} whileHover={{ y: -6 }}>
           <div className="adv-card-top"><span className="adv-card-index">0{index + 1}</span><span className="adv-card-rule" /></div>
           <div className="adv-card-content"><h3>{title}</h3><p>{body}</p></div>
         </motion.article>)}
@@ -321,22 +321,22 @@ function Footer() {
         <div className="partner-track partner-track-reverse" aria-hidden="true">{[...partners.slice().reverse(), ...partners.slice().reverse()].map((partner, index) => <span key={`partner-b-${partner}-${index}`}>{partner}</span>)}</div>
       </div>
     </motion.section>
-    <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: 'easeOut' }}>
+    <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 64, scale: .96, filter: 'blur(10px)' }} whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} viewport={{ once: false, amount: .2 }} transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}>
       <div className="cta-blueprint-copy">
-        <motion.p className="section-label cta-label" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .1, duration: .45 }}>Ready to move faster?</motion.p>
-        <motion.h2 id="cta-title" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .16, duration: .55 }}>Let’s build a system that <span>powers your growth.</span></motion.h2>
-        <motion.p className="cta-copy" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .22, duration: .5 }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
-        <motion.div className="cta-actions" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .28, duration: .5 }}>
+        <motion.p className="section-label cta-label" initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Ready to move faster?</motion.p>
+        <motion.h2 id="cta-title" initial={{ opacity: 0, x: -42, rotateY: -8 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build a system that <span>powers your growth.</span></motion.h2>
+        <motion.p className="cta-copy" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
+        <motion.div className="cta-actions" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .42, duration: .8, ease: 'easeOut' }}>
           <a className="btn btn-primary cta-button" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a>
           <span>Strategy <i /> Systems <i /> Automation</span>
         </motion.div>
       </div>
-      <motion.div className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business friction into working systems" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .35 }} transition={{ delay: .12, duration: .65, ease: 'easeOut' }}>
+      <motion.div className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business friction into working systems" initial={{ opacity: 0, x: 72, rotateY: 6 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false, amount: .35 }} transition={{ delay: .28, duration: 1, ease: [0.22, 1, 0.36, 1] }}>
         <div className="cta-panel-header"><div><span className="cta-panel-kicker">The XNR workflow</span><strong>From friction to flow</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
         <ol className="cta-steps">
-          <li className="cta-step"><span className="cta-step-number">01</span><div><h3>Find the friction</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></li>
-          <li className="cta-step"><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></li>
-          <li className="cta-step"><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></li>
+          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .52, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">01</span><div><h3>Find the friction</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></motion.li>
+          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .64, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></motion.li>
+          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .76, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></motion.li>
         </ol>
         <div className="cta-panel-footer"><span>One partner from strategy to scale</span><span className="cta-panel-line" aria-hidden="true"><i /></span></div>
       </motion.div>
