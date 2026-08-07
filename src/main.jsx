@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import App from './App.jsx';
+import App, { JourneySignal } from './App.jsx';
 import TeamPage from './TeamPage.jsx';
 import InsightsPage from './InsightsPage.jsx';
 import SlugPage from './SlugPage.jsx';
@@ -19,6 +19,7 @@ const slugPage = ['/services', '/projects'].includes(cleanPath) ? cleanPath.slic
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <JourneySignal />
       {isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
     </QueryClientProvider>
   </React.StrictMode>,

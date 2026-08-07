@@ -123,7 +123,7 @@ function BrowserCard({ type = 'achieve' }) {
   </motion.div>;
 }
 
-function JourneySignal() {
+export function JourneySignal() {
   const rawX = useMotionValue(-40);
   const rawY = useMotionValue(-40);
   const rawScale = useMotionValue(.8);
@@ -211,7 +211,8 @@ function JourneySignal() {
       const magneticDistance = Math.abs(nearest.y - guideY);
       let proximity = 1 - Math.min(1, magneticDistance / 170);
       let attraction = proximity * proximity * (3 - 2 * proximity);
-      const isAtOrigin = window.scrollY < 72;
+      const hasJourneyOrigin = Boolean(document.querySelector('.journey-origin'));
+      const isAtOrigin = hasJourneyOrigin && window.scrollY < 72;
       let isDocked = isAtOrigin || magneticDistance < 40;
       const featureAnchors = Array.from(document.querySelectorAll('.projects .feature-card')).map((element) => {
         const rect = element.getBoundingClientRect();
@@ -291,12 +292,12 @@ function JourneySignal() {
       rawTailOpacity.set(isDocked ? 0 : Math.min(.84, Math.max(.42, speed / 28)));
       lastX = targetX;
       lastY = viewportY;
-      if (isAtOrigin && !hasPositioned) {
+      if (!hasPositioned) {
         rawX.set(targetX - 9);
         rawY.set(viewportY - 9);
         x.jump(targetX - 9);
         y.jump(viewportY - 9);
-        scale.jump(1.18);
+        scale.jump(isDocked ? 1.18 : 1);
         scaleX.jump(1);
         scaleY.jump(1);
         rotate.jump(0);
@@ -350,7 +351,6 @@ function Hero() {
   const widgetFootY = useTransform(scrollY, [0, 520], [0, 42]);
   const widgetFootOpacity = useTransform(scrollY, [0, 520], [1, .35]);
   return <motion.section className="hero" id="home" aria-labelledby="hero-title" aria-describedby="hero-description" style={{ filter: heroBlur, opacity: heroOpacity }}>
-    <JourneySignal />
     <motion.div className="hero-art hero-art-left" style={{ y: widgetLeftY, rotate: widgetLeftRotate }} initial={{ scale: 0, opacity: 0, rotate: -12 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>

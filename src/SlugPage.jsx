@@ -28,5 +28,16 @@ export default function SlugPage({ type }) {
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${window.location.origin}/${type}`);
   }, [type]);
 
+  useEffect(() => {
+    if (type !== 'projects') return undefined;
+
+    const cards = Array.from(document.querySelectorAll('.projects .feature-card'));
+    const timers = cards.map((card, index) => window.setTimeout(() => {
+      card.classList.add('signal-revealed');
+    }, 260 + index * 180));
+
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
+  }, [type]);
+
   return <div className="page-shell team-page slug-page"><PageHeader /><main id="main-content">{type === 'services' ? <Advantage /> : <Projects />}<Footer /></main></div>;
 }
