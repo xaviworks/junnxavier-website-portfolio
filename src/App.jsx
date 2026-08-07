@@ -166,6 +166,7 @@ function JourneySignal() {
       '.activity-health',
       '.projects .feature-card:nth-child(2)',
       '.gallery-project.is-active',
+      '.team .team-member:nth-child(2)',
       '.advantage-aside',
       '.advantage .adv-card:nth-child(3)',
       '.partnership-orb-target',
@@ -537,7 +538,33 @@ function Advantage() {
   </motion.section>;
 }
 
-function Footer() {
+export function Team() {
+  const members = [
+    ['01', 'Rumel B. Eumague Jr.', 'Sole Proprietor / CEO / Founder', 'Company leadership and direction.', 'RE', 'rumel.jpeg'],
+    ['02', 'Junn Xavier T. Adalid', 'CPTO / Co-Founder', 'Product, technology, and long-term vision.', 'JXA', 'xavier.jpeg'],
+    ['03', 'Niel Jehush I. Palicte', 'CTO / Co-Founder', 'Technology strategy and technical delivery.', 'NIP', 'niel.jpeg'],
+    ['04', 'Patrick Jhun T. Adalid', 'Software Developer / Marketing Manager', 'Software development and market growth.', 'PTA', 'patrick1.jpeg'],
+    ['05', 'Leo J Bande', 'QA Specialist', 'Quality, reliability, and release confidence.', 'LJB', 'leo.jpeg'],
+  ];
+
+  return <section className="section team" id="team" aria-labelledby="team-title">
+    <div className="team-heading">
+      <div>
+        <p className="section-label">The team</p>
+        <h1 id="team-title">Small team. Serious momentum.</h1>
+      </div>
+      <p className="section-copy">Meet the XNR IT Solutions team building custom software, connected business systems, and workflow automation with you from the first question to the final handoff.</p>
+    </div>
+    <div className="team-grid">
+      {members.map(([number, name, designation, body, initials, photo], index) => <motion.article className="team-member" key={number} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} viewport={{ once: false, amount: .18 }} transition={{ delay: index * .1, duration: .65, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="team-member-photo"><img src={`/images/teams/${photo}`} alt={`${name}, ${designation}`} /></div>
+        <div className="team-member-copy"><h3>{name}</h3><p>{designation}</p></div>
+      </motion.article>)}
+    </div>
+  </section>;
+}
+
+export function Footer() {
   return <>
     <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <motion.div className="partnership-invite" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .75, ease: 'easeOut' }}>
@@ -584,5 +611,12 @@ export default function App() {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
   }, []);
-  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="#home" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#projects">Projects</a><a href="#partners">Team</a><a href="#contact">Contact</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="#contact">Contact Sales</a><a className="btn btn-primary" href="#contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
+  useEffect(() => {
+    const targetId = window.location.hash.slice(1);
+    if (!targetId || targetId === 'home') return;
+
+    const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    requestAnimationFrame(() => requestAnimationFrame(scrollToTarget));
+  }, []);
+  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="#home" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#projects">Projects</a><a href="/team">Team</a><a href="#contact">Contact</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="#contact">Contact Sales</a><a className="btn btn-primary" href="#contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }
