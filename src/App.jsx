@@ -2,19 +2,9 @@ import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'moti
 import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { apiFetch } from './lib/api.js';
 
 const partners = ['MCars', 'UAA', 'Ala Cino', 'Hipe', 'Melon Lemon', 'Behind The Work'];
-const projects = [
-  ['01', 'E-commerce platforms', 'Product, order, and customer flow built around your operation.'],
-  ['02', 'Internal dashboards', 'A single source of truth that keeps your team aligned.'],
-  ['03', 'Client portals', 'Sales systems that shorten response time and remove friction.'],
-  ['04', 'Workflow automation', 'Connected processes that reduce manual work and keep teams moving.'],
-  ['05', 'CRM & sales systems', 'Better lead management, faster follow-up, and clearer customer journeys.'],
-];
-// Keep several copies in the track so the gallery can travel in either
-// direction for a long time before it has to normalize its index.
-const loopedProjects = Array.from({ length: 7 }, () => projects).flat();
-
 function Button({ children, outline = false, href = '#contact' }) {
   return <a className={`btn ${outline ? 'btn-secondary' : 'btn-primary'}`} href={href}>{children}</a>;
 }
@@ -376,7 +366,7 @@ function Hero() {
       </motion.p>
       <h1 id="hero-title">We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Aut<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>matically</h1>
       <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
-      <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline>Explore Our Insights</Button></div>
+      <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline href="/insights">Explore Our Insights</Button></div>
     </motion.div>
     <motion.div className="hero-art hero-art-deadline" style={{ y: widgetDeadlineY }} initial={{ opacity: 0, x: 46, rotate: 8 }} animate={{ opacity: 1, x: 0, rotate: 0 }} transition={{ delay: .85, duration: .9, ease: [0.22, 1, 0.36, 1] }}><DeadlineWidget /></motion.div>
     <motion.div className="hero-art hero-art-right" style={{ y: widgetRightY }} initial={{ opacity: 0, scale: .72, rotate: -7 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}><div className="hero-widget-stack"><CalculatorWidget /></div></motion.div>
@@ -394,18 +384,43 @@ function IntroSection() {
 }
 
 function Projects() {
-  const loopStart = projects.length * 2;
-  const loopEnd = projects.length * 5;
-  const [activeIndex, setActiveIndex] = useState(projects.length * 3);
+  const [projects, setProjects] = useState([]);
+  const [projectsError, setProjectsError] = useState('');
+  const [projectsLoading, setProjectsLoading] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [trackX, setTrackX] = useState(0);
   const galleryRef = useRef(null);
   const trackInnerRef = useRef(null);
+  const loopStart = projects.length * 2;
+  const loopEnd = projects.length * 5;
+  const loopedProjects = Array.from({ length: 7 }, () => projects).flat();
+
+  useEffect(() => {
+    let cancelled = false;
+    apiFetch('/api/projects')
+      .then((data) => {
+        if (!cancelled) setProjects(data);
+      })
+      .catch((error) => {
+        if (!cancelled) setProjectsError(error.message);
+      })
+      .finally(() => {
+        if (!cancelled) setProjectsLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (projects.length) setActiveIndex(projects.length * 3);
+  }, [projects.length]);
+
   const move = useCallback((direction) => setActiveIndex((current) => {
+    if (!projects.length) return current;
     const next = current + direction;
     if (next < loopStart) return loopEnd - 1;
     if (next >= loopEnd) return loopStart;
     return next;
-  }), []);
+  }), [loopEnd, loopStart, projects.length]);
   useEffect(() => {
     const timer = window.setInterval(() => move(1), 3000);
     return () => window.clearInterval(timer);
@@ -438,19 +453,19 @@ function Projects() {
     <h2>Let’s Build a System That Powers Your Growth</h2>
     <p className="section-copy">Custom software and automation, engineered around how your business runs.</p>
     <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
-    <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
+    {projectsError ? <p className="api-status is-error" role="alert">Unable to load projects right now.</p> : projectsLoading ? <p className="api-status">Loading projects…</p> : !projects.length ? <p className="api-status">No projects published yet.</p> : <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
       <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous project" onClick={() => move(-1)}>‹</button>
-      <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map(([number, title, body], index) => {
+      <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map((project, index) => {
         const leftIndex = activeIndex - 1;
         const rightIndex = activeIndex + 1;
-        return <motion.article data-carousel-index={index} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={`${number}-${index}`}>
+        return <motion.article data-carousel-index={index} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={`${project.number}-${index}`}>
           <div className="gallery-project-art" aria-hidden="true"><span className="gallery-window-dots"><i></i><i></i><i></i></span><span className="gallery-art-line line-one"></span><span className="gallery-art-line line-two"></span><span className="gallery-art-block block-one"></span><span className="gallery-art-block block-two"></span><span className="gallery-art-block block-three"></span></div>
-          <div className="gallery-project-content"><div className="gallery-project-meta"><span>{number}</span><small>Case study</small><ArrowUpRight size={17} strokeWidth={2.2} /></div><h3>{title}</h3><p>{body}</p></div>
+          <div className="gallery-project-content"><div className="gallery-project-meta"><span>{project.number}</span><small>{project.date ? project.date.slice(0, 7) : 'Case study'}</small><ArrowUpRight size={17} strokeWidth={2.2} /></div><h3>{project.title}</h3><p>{project.body}</p></div>
         </motion.article>;
       })}</motion.div></div>
       <button className="gallery-arrow gallery-next" type="button" aria-label="Next project" onClick={() => move(1)}>›</button>
-    </div>
-    <div className="gallery-dots" aria-label="Choose a project">{projects.map(([number], index) => <button key={number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => setActiveIndex(loopStart + index)} />)}</div>
+    </div>}
+    {projects.length > 0 && <div className="gallery-dots" aria-label="Choose a project">{projects.map((project, index) => <button key={project.number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${project.number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => setActiveIndex(loopStart + index)} />)}</div>}
   </motion.section>;
 }
 
@@ -539,13 +554,24 @@ function Advantage() {
 }
 
 export function Team() {
-  const members = [
-    ['01', 'Rumel B. Eumague Jr.', 'Sole Proprietor / CEO / Founder', 'Company leadership and direction.', 'RE', 'rumel.jpeg'],
-    ['02', 'Junn Xavier T. Adalid', 'CPTO / Co-Founder', 'Product, technology, and long-term vision.', 'JXA', 'xavier.jpeg'],
-    ['03', 'Niel Jehush I. Palicte', 'CTO / Co-Founder', 'Technology strategy and technical delivery.', 'NIP', 'niel.jpeg'],
-    ['04', 'Patrick Jhun T. Adalid', 'Software Developer / Marketing Manager', 'Software development and market growth.', 'PTA', 'patrick1.jpeg'],
-    ['05', 'Leo J Bande', 'QA Specialist', 'Quality, reliability, and release confidence.', 'LJB', 'leo.jpeg'],
-  ];
+  const [members, setMembers] = useState([]);
+  const [membersError, setMembersError] = useState('');
+  const [membersLoading, setMembersLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    apiFetch('/api/team')
+      .then((data) => {
+        if (!cancelled) setMembers(data);
+      })
+      .catch((error) => {
+        if (!cancelled) setMembersError(error.message);
+      })
+      .finally(() => {
+        if (!cancelled) setMembersLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   return <section className="section team" id="team" aria-labelledby="team-title">
     <div className="team-heading">
@@ -555,13 +581,49 @@ export function Team() {
       </div>
       <p className="section-copy">Meet the XNR IT Solutions team building custom software, connected business systems, and workflow automation with you from the first question to the final handoff.</p>
     </div>
-    <div className="team-grid">
-      {members.map(([number, name, designation, body, initials, photo], index) => <motion.article className="team-member" key={number} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} viewport={{ once: false, amount: .18 }} transition={{ delay: index * .1, duration: .65, ease: [0.22, 1, 0.36, 1] }}>
-        <div className="team-member-photo"><img src={`/images/teams/${photo}`} alt={`${name}, ${designation}`} /></div>
-        <div className="team-member-copy"><h3>{name}</h3><p>{designation}</p></div>
+    {membersError ? <p className="api-status is-error" role="alert">Unable to load the team right now.</p> : membersLoading ? <p className="api-status">Loading team…</p> : !members.length ? <p className="api-status">No team members published yet.</p> : <div className="team-grid">
+      {members.map((member, index) => <motion.article className="team-member" key={member.number} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} viewport={{ once: false, amount: .18 }} transition={{ delay: index * .1, duration: .65, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="team-member-photo"><img src={`/images/teams/${member.photo}`} alt={`${member.name}, ${member.designation}`} /></div>
+        <div className="team-member-copy"><h3>{member.name}</h3><p>{member.designation}</p></div>
       </motion.article>)}
-    </div>
+    </div>}
   </section>;
+}
+
+function ContactForm() {
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setSubmitting(true);
+    setStatus('');
+    setError('');
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form));
+
+    try {
+      const result = await apiFetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(values),
+      });
+      form.reset();
+      setStatus(result.message || 'Thanks. We will get back to you soon.');
+    } catch (submitError) {
+      setError(submitError.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return <form className="contact-form" onSubmit={handleSubmit} noValidate>
+    <div className="contact-form-row"><label>Name<input name="name" type="text" autoComplete="name" minLength="2" maxLength="120" required /></label><label>Email<input name="email" type="email" autoComplete="email" maxLength="254" required /></label></div>
+    <label>How can we help?<textarea name="message" rows="4" minLength="10" maxLength="4000" required /></label>
+    <label className="contact-form-honeypot" aria-hidden="true">Website<input name="website" type="text" tabIndex="-1" autoComplete="off" /></label>
+    <div className="contact-form-actions"><button className="btn btn-primary" type="submit" disabled={submitting}>{submitting ? 'Sending…' : 'Send inquiry'} <ArrowRight /></button><span aria-live="polite">{status || error}</span></div>
+  </form>;
 }
 
 export function Footer() {
@@ -583,6 +645,7 @@ export function Footer() {
           <a className="btn btn-primary cta-button" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a>
           <span>Strategy <i /> Systems <i /> Automation</span>
         </motion.div>
+        <ContactForm />
       </div>
       <motion.div className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business friction into working systems" initial={{ opacity: 0, x: 72, rotateY: 6 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false, amount: .35 }} transition={{ delay: .28, duration: 1, ease: [0.22, 1, 0.36, 1] }}>
         <div className="cta-panel-header"><div><span className="cta-panel-kicker">The XNR workflow</span><strong>From friction to flow</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
@@ -618,5 +681,5 @@ export default function App() {
     const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
     requestAnimationFrame(() => requestAnimationFrame(scrollToTarget));
   }, []);
-  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="#home" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#projects">Projects</a><a href="/team">Team</a><a href="#contact">Contact</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="#contact">Contact Sales</a><a className="btn btn-primary" href="#contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
+  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="#home" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="#contact">Contact Sales</a><a className="btn btn-primary" href="#contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }

@@ -25,7 +25,7 @@ export default function TeamPage() {
             <a href="/#services">Services</a>
             <a href="/#projects">Projects</a>
             <a className="is-current" href="/team" aria-current="page">Team</a>
-            <a href="/#contact">Contact</a>
+            <a href="/insights">Insights</a>
           </nav>
         </div>
         <div className="header-fill" />
