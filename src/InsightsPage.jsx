@@ -46,7 +46,7 @@ export default function InsightsPage() {
           </nav>
         </div>
         <div className="header-fill" />
-        <div className="topbar-actions"><a className="btn btn-secondary" href="/contact">Contact Sales</a><a className="btn btn-primary" href="/contact">Get Started <ArrowRight /></a></div>
+        <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/get-started">Get Started <ArrowRight /></a></div>
         <div className="header-spacer" />
       </div>
     </header>
@@ -56,7 +56,7 @@ export default function InsightsPage() {
           <p className="section-label">Insights</p>
           <h1 id="insights-title">Ideas for better systems.</h1>
           <p className="section-copy">Practical notes on custom software, connected business systems, and workflow automation.</p>
-          <a className="btn btn-primary" href="/contact">Talk to our team <ArrowRight /></a>
+          <a className="btn btn-primary" href="/get-started">Talk to our team <ArrowRight /></a>
         </div>
         {error ? <p className="api-status is-error" role="alert">Unable to load insights right now.</p> : loading ? <p className="api-status">Loading insights…</p> : !insights.length ? <p className="api-status">No insights published yet.</p> : <div className="insights-grid">{insights.map((insight) => <article className="insight-card" key={insight.slug}><p className="section-label">{insight.date || 'Insight'}</p><h2>{insight.title}</h2><p>{insight.excerpt}</p></article>)}</div>}
       </section>

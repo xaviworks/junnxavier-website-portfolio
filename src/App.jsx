@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { apiFetch } from './lib/api.js';
 
 const partners = ['MCars', 'UAA', 'Ala Cino', 'Hipe', 'Melon Lemon', 'Behind The Work'];
-function Button({ children, outline = false, href = '#contact' }) {
+function Button({ children, outline = false, href = '/get-started' }) {
   return <a className={`btn ${outline ? 'btn-secondary' : 'btn-primary'}`} href={href}>{children}</a>;
 }
 
@@ -365,7 +365,7 @@ function Hero() {
       </motion.p>
       <h1 id="hero-title">We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Aut<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>matically</h1>
       <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
-      <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline href="/insights">Explore Our Insights</Button></div>
+      <div className="hero-actions"><Button href="/get-started">Get Started <ArrowRight /></Button><Button outline href="/insights">Explore Our Insights</Button></div>
     </motion.div>
     <motion.div className="hero-art hero-art-deadline" style={{ y: widgetDeadlineY }} initial={{ opacity: 0, x: 46, rotate: 8 }} animate={{ opacity: 1, x: 0, rotate: 0 }} transition={{ delay: .85, duration: .9, ease: [0.22, 1, 0.36, 1] }}><DeadlineWidget /></motion.div>
     <motion.div className="hero-art hero-art-right" style={{ y: widgetRightY }} initial={{ opacity: 0, scale: .72, rotate: -7 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}><div className="hero-widget-stack"><CalculatorWidget /></div></motion.div>
@@ -636,7 +636,7 @@ export function Footer() {
         <p className="section-label">Partnerships</p>
         <h2 id="partners-title">Open to Partnerships<span className="partnership-orb-target" aria-hidden="true" /></h2>
         <p className="section-copy">XNR IT Solutions welcomes partnerships with businesses, government agencies, educational institutions, and technology providers. Let’s work together to build secure, reliable, and impactful digital solutions.</p>
-        <a className="btn btn-primary partnership-button" href="#contact">Start a Conversation <ArrowRight /></a>
+        <a className="btn btn-primary partnership-button" href="/get-started">Start a Conversation <ArrowRight /></a>
       </motion.div>
     </motion.section>
     <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .7, ease: 'easeOut' }}>
@@ -676,17 +676,19 @@ export default function App() {
   const headerOpacity = useTransform(scrollY, [0, 420], [1, 0]);
   const headerVisibility = useTransform(scrollY, [0, 380, 420], ['visible', 'visible', 'hidden']);
   useLayoutEffect(() => {
-    if (!window.location.hash || window.location.hash === '#home') {
+    const isGetStarted = window.location.pathname.replace(/\/+$/, '') === '/get-started';
+    if ((!window.location.hash || window.location.hash === '#home') && !isGetStarted) {
       window.history.scrollRestoration = 'manual';
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
   }, []);
   useEffect(() => {
-    const targetId = window.location.hash.slice(1);
+    const isGetStarted = window.location.pathname.replace(/\/+$/, '') === '/get-started';
+    const targetId = isGetStarted ? 'contact' : window.location.hash.slice(1);
     if (!targetId || targetId === 'home') return;
 
     const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
     requestAnimationFrame(() => requestAnimationFrame(scrollToTarget));
   }, []);
-  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Services</a><a href="/projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/contact">Contact Sales</a><a className="btn btn-primary" href="/contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
+  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Services</a><a href="/projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/get-started">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }
