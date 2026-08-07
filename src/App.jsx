@@ -1,6 +1,7 @@
-import { motion, useScroll, useSpring, useTransform } from 'motion/react';
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
 import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const partners = ['MCars', 'UAA', 'Ala Cino', 'Hipe', 'Melon Lemon', 'Behind The Work'];
 const projects = [
@@ -132,6 +133,222 @@ function BrowserCard({ type = 'achieve' }) {
   </motion.div>;
 }
 
+function JourneySignal() {
+  const rawX = useMotionValue(-40);
+  const rawY = useMotionValue(-40);
+  const rawScale = useMotionValue(.8);
+  const rawRotate = useMotionValue(0);
+  const rawStretchX = useMotionValue(1);
+  const rawStretchY = useMotionValue(1);
+  const rawTailScale = useMotionValue(.35);
+  const rawTailOpacity = useMotionValue(0);
+  const x = useSpring(rawX, { stiffness: 88, damping: 20, mass: .82 });
+  const y = useSpring(rawY, { stiffness: 88, damping: 20, mass: .82 });
+  const scale = useSpring(rawScale, { stiffness: 180, damping: 18, mass: .55 });
+  const rotate = useSpring(rawRotate, { stiffness: 115, damping: 24, mass: .7 });
+  const scaleX = useSpring(rawStretchX, { stiffness: 170, damping: 20, mass: .5 });
+  const scaleY = useSpring(rawStretchY, { stiffness: 170, damping: 20, mass: .5 });
+  const tailScale = useSpring(rawTailScale, { stiffness: 115, damping: 22, mass: .65 });
+  const tailOpacity = useSpring(rawTailOpacity, { stiffness: 105, damping: 24, mass: .7 });
+  const [visible, setVisible] = useState(false);
+  const [docked, setDocked] = useState(false);
+  const [atOrigin, setAtOrigin] = useState(true);
+  const [greetingKind, setGreetingKind] = useState(null);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) return undefined;
+
+    const selectors = [
+      '.journey-origin',
+      '.work-address',
+      '.work-search',
+      '.activity-health',
+      '.projects .feature-card:nth-child(2)',
+      '.gallery-project.is-active',
+      '.advantage-aside',
+      '.advantage .adv-card:nth-child(3)',
+      '.partnership-orb-target',
+      '.cta-button',
+      '.journey-destination',
+    ];
+    let frame = 0;
+    let lastX = -40;
+    let lastY = -40;
+    let currentAngle = 0;
+    let activeTarget = null;
+    let hasPositioned = false;
+    let ready = false;
+    let cancelled = false;
+
+    const update = () => {
+      frame = 0;
+      const anchors = selectors.map((selector) => {
+        const element = document.querySelector(selector);
+        if (!element) return null;
+        const rect = element.getBoundingClientRect();
+        return {
+          element,
+          x: rect.left + rect.width / 2,
+          y: rect.top + window.scrollY + rect.height / 2,
+        };
+      }).filter(Boolean).sort((a, b) => a.y - b.y);
+
+      if (anchors.length < 2) return;
+      const guideY = window.scrollY + window.innerHeight * .58;
+      const first = anchors[0];
+      const last = anchors[anchors.length - 1];
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 140;
+      setVisible(guideY >= first.y - window.innerHeight * .45);
+
+      let start = first;
+      let end = anchors[1];
+      for (let index = 0; index < anchors.length - 1; index += 1) {
+        if (guideY >= anchors[index].y) {
+          start = anchors[index];
+          end = anchors[index + 1];
+        }
+      }
+      if (guideY >= last.y) start = end = last;
+
+      const distance = Math.max(1, end.y - start.y);
+      const progress = Math.min(1, Math.max(0, (guideY - start.y) / distance));
+      const eased = progress * progress * (3 - 2 * progress);
+      let targetX = start.x + (end.x - start.x) * eased;
+      let documentY = start.y + (end.y - start.y) * eased;
+      documentY -= Math.sin(Math.PI * eased) * Math.min(30, Math.max(8, distance * .045));
+      let nearest = anchors.reduce((best, anchor) => Math.abs(anchor.y - guideY) < Math.abs(best.y - guideY) ? anchor : best, first);
+      const magneticDistance = Math.abs(nearest.y - guideY);
+      let proximity = 1 - Math.min(1, magneticDistance / 170);
+      let attraction = proximity * proximity * (3 - 2 * proximity);
+      const isAtOrigin = window.scrollY < 72;
+      let isDocked = isAtOrigin || magneticDistance < 40;
+      const featureAnchors = Array.from(document.querySelectorAll('.projects .feature-card')).map((element) => {
+        const rect = element.getBoundingClientRect();
+        return { element, x: rect.left + rect.width / 2, y: rect.top + window.scrollY + 18, centerY: rect.top + window.scrollY + rect.height / 2 };
+      });
+      const featureCenterY = featureAnchors[0]?.centerY ?? 0;
+      const featureTourRange = Math.max(300, window.innerHeight * .38);
+      const featureTourStart = featureCenterY - featureTourRange / 2;
+      const inFeatureTour = featureAnchors.length === 3 && guideY >= featureTourStart && guideY <= featureTourStart + featureTourRange;
+      first.element.classList.toggle('signal-departed', !isAtOrigin);
+      if (isAtOrigin) {
+        nearest = first;
+        targetX = first.x;
+        documentY = first.y + 5;
+      } else if (atBottom) {
+        const destination = anchors.find((anchor) => anchor.element.matches('.journey-destination'));
+        if (destination) {
+          nearest = destination;
+          targetX = destination.x;
+          documentY = destination.y;
+          isDocked = true;
+        }
+      } else if (inFeatureTour) {
+        const tourProgress = Math.min(1, Math.max(0, (guideY - featureTourStart) / featureTourRange));
+        const cardProgress = tourProgress * (featureAnchors.length - 1);
+        const fromIndex = Math.min(featureAnchors.length - 1, Math.floor(cardProgress));
+        const toIndex = Math.min(featureAnchors.length - 1, fromIndex + 1);
+        const localProgress = cardProgress - fromIndex;
+        const localEase = localProgress * localProgress * (3 - 2 * localProgress);
+        targetX = featureAnchors[fromIndex].x + (featureAnchors[toIndex].x - featureAnchors[fromIndex].x) * localEase;
+        const travelArc = Math.sin(Math.PI * localProgress) * 20;
+        const rebound = Math.sin(localProgress * Math.PI * 3) * Math.exp(-localProgress * 4.5) * 7;
+        documentY = featureAnchors[fromIndex].y - travelArc - rebound;
+        const nearestIndex = Math.round(cardProgress);
+        nearest = featureAnchors[nearestIndex];
+        const contactDistance = Math.abs(cardProgress - nearestIndex);
+        proximity = 1 - Math.min(1, contactDistance / .5);
+        attraction = proximity * proximity * (3 - 2 * proximity);
+        isDocked = contactDistance < .16;
+        const revealDistance = nearestIndex === featureAnchors.length - 1 ? .4 : .24;
+        if (contactDistance < revealDistance) nearest.element.classList.add('signal-revealed');
+      } else {
+        targetX += (nearest.x - targetX) * attraction * .82;
+        documentY += (nearest.y - documentY) * attraction * .82;
+      }
+
+      if (activeTarget !== nearest.element) {
+        activeTarget?.classList.remove('signal-active');
+        activeTarget?.classList.remove('signal-near');
+        activeTarget = nearest.element;
+      }
+      activeTarget.classList.toggle('signal-near', proximity > .24 && !isAtOrigin);
+      activeTarget.classList.toggle('signal-active', isDocked);
+      setDocked(isDocked);
+      setAtOrigin(isAtOrigin);
+      const nextGreeting = nearest.element.matches('.work-address, .work-search')
+        ? 'intro'
+        : nearest.element.matches('.partnership-orb-target')
+          ? 'partnership'
+          : null;
+      setGreetingKind(isAtOrigin ? null : nextGreeting);
+      const isCardImpact = inFeatureTour && isDocked;
+      rawScale.set(isCardImpact ? 1.06 : isDocked ? 1.18 : 1);
+      const viewportY = documentY - window.scrollY;
+      const deltaX = targetX - lastX;
+      const deltaY = viewportY - lastY;
+      const speed = Math.hypot(deltaX, deltaY);
+      if (!isDocked && speed > .5) {
+        const nextAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+        const shortestTurn = ((nextAngle - currentAngle + 540) % 360) - 180;
+        currentAngle += shortestTurn;
+        rawRotate.set(currentAngle);
+      }
+      rawStretchX.set(isCardImpact ? 1.18 : isDocked ? 1 : 1 + Math.min(.22, speed / 95));
+      rawStretchY.set(isCardImpact ? .84 : isDocked ? 1 : 1 - Math.min(.1, speed / 190));
+      rawTailScale.set(isDocked ? .35 : Math.min(1.3, Math.max(.62, speed / 22)));
+      rawTailOpacity.set(isDocked ? 0 : Math.min(.84, Math.max(.42, speed / 28)));
+      lastX = targetX;
+      lastY = viewportY;
+      if (isAtOrigin && !hasPositioned) {
+        rawX.set(targetX - 9);
+        rawY.set(viewportY - 9);
+        x.jump(targetX - 9);
+        y.jump(viewportY - 9);
+        scale.jump(1.18);
+        scaleX.jump(1);
+        scaleY.jump(1);
+        rotate.jump(0);
+        hasPositioned = true;
+      } else {
+        rawX.set(targetX - 9);
+        rawY.set(viewportY - 9);
+      }
+    };
+
+    const schedule = () => {
+      if (ready && !frame) frame = window.requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    const initialize = () => {
+      if (cancelled) return;
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        if (cancelled) return;
+        ready = true;
+        update();
+      }));
+    };
+    if (document.fonts?.ready) document.fonts.ready.then(initialize);
+    else initialize();
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      activeTarget?.classList.remove('signal-active');
+      activeTarget?.classList.remove('signal-near');
+      document.querySelector('.journey-origin')?.classList.remove('signal-departed');
+    };
+  }, [rawRotate, rawScale, rawStretchX, rawStretchY, rawTailOpacity, rawTailScale, rawX, rawY, rotate, scale, scaleX, scaleY, x, y]);
+
+  return createPortal(<>
+    <motion.div className={`journey-signal ${visible ? 'is-visible' : ''} ${docked ? 'is-docked' : ''} ${atOrigin ? 'is-origin' : ''}`} style={{ x, y, scale, scaleX, scaleY, rotate, '--signal-tail-scale': tailScale, '--signal-tail-opacity': tailOpacity }} aria-hidden="true"><span /></motion.div>
+    <motion.div className={`signal-greeting ${greetingKind ? 'is-visible' : ''} ${greetingKind === 'partnership' ? 'is-partnership' : ''}`} style={{ x, y }} aria-hidden="true"><span>{greetingKind === 'partnership' ? 'Have a big idea? Let’s build it together.' : 'Hi! I’m Nova.'}</span></motion.div>
+  </>, document.body);
+}
+
 function Hero() {
   const { scrollY } = useScroll();
   const heroBlur = useTransform(scrollY, [0, 520], ['blur(0px)', 'blur(7px)']);
@@ -143,6 +360,7 @@ function Hero() {
   const widgetFootY = useTransform(scrollY, [0, 520], [0, 42]);
   const widgetFootOpacity = useTransform(scrollY, [0, 520], [1, .35]);
   return <motion.section className="hero" id="home" aria-labelledby="hero-title" aria-describedby="hero-description" style={{ filter: heroBlur, opacity: heroOpacity }}>
+    <JourneySignal />
     <motion.div className="hero-art hero-art-left" style={{ y: widgetLeftY, rotate: widgetLeftRotate }} initial={{ scale: 0, opacity: 0, rotate: -12 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>
@@ -155,7 +373,7 @@ function Hero() {
       >
         <span>FOR BUSINESS OWNERS, FOUNDERS, AND ENTREPRENEURS</span>
       </motion.p>
-      <h1 id="hero-title">We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Automatically</h1>
+      <h1 id="hero-title">We Build Systems That<br />Run Businesses <span className="hero-chip"><ArrowUpRight /></span> Aut<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>matically</h1>
       <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Custom software and automation that cut manual work, speed up sales, and scale as you grow.</motion.p>
       <div className="hero-actions"><Button>Get Started <ArrowRight /></Button><Button outline>Explore Our Insights</Button></div>
     </motion.div>
@@ -324,7 +542,7 @@ function Footer() {
     <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <motion.div className="partnership-invite" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .75, ease: 'easeOut' }}>
         <p className="section-label">Partnerships</p>
-        <h2 id="partners-title">Open to Partnerships</h2>
+        <h2 id="partners-title">Open to Partnerships<span className="partnership-orb-target" aria-hidden="true" /></h2>
         <p className="section-copy">XNR IT Solutions welcomes partnerships with businesses, government agencies, educational institutions, and technology providers. Let’s work together to build secure, reliable, and impactful digital solutions.</p>
         <a className="btn btn-primary partnership-button" href="#contact">Start a Conversation <ArrowRight /></a>
       </motion.div>
@@ -332,7 +550,7 @@ function Footer() {
     <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 64, scale: .96, filter: 'blur(10px)' }} whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} viewport={{ once: false, amount: .2 }} transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}>
       <div className="cta-blueprint-copy">
         <motion.p className="section-label cta-label" initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Ready to move faster?</motion.p>
-        <motion.h2 id="cta-title" initial={{ opacity: 0, x: -42, rotateY: -8 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build a system that <span>powers your growth.</span></motion.h2>
+        <motion.h2 id="cta-title" initial={{ opacity: 0, x: -42, rotateY: -8 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build a system that <span>powers your gr<span className="journey-destination">o</span>wth.</span></motion.h2>
         <motion.p className="cta-copy" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
         <motion.div className="cta-actions" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .42, duration: .8, ease: 'easeOut' }}>
           <a className="btn btn-primary cta-button" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a>
