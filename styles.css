@@ -281,7 +281,7 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 .activity-progress { display: block; height: 8px; margin: 20px 0 12px; overflow: hidden; border-radius: 999px; background: #edf1f7; }
 .activity-progress b { display: block; width: 82%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #3376ff, #65d7ff); animation: activity-progress 2.8s ease-in-out infinite alternate; }
 .activity-line-chart { display: block; width: 100%; height: 58px; overflow: visible; }
-.activity-line-chart .chart-line { fill: none; stroke: #3376ff; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 360; stroke-dashoffset: 360; animation: chart-line-draw 2.4s cubic-bezier(.22,.61,.36,1) forwards, chart-line-glow 2.8s ease-in-out infinite alternate; }
+.activity-line-chart .chart-line { fill: none; stroke: #3376ff; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 360; stroke-dashoffset: 0; animation: chart-line-glow 2.8s ease-in-out infinite alternate; animation-delay: .42s; }
 .activity-line-chart circle { fill: #fff; stroke: #3376ff; stroke-width: 2; animation: chart-point-pulse 2s ease-in-out infinite; }
 .activity-health small, .activity-metrics em { color: #39b85a; font-size: 11px; font-style: normal; }
 .activity-metrics { display: flex; align-items: flex-start; gap: 18px; }
