@@ -38,6 +38,6 @@ INSERT INTO team_members (number, name, designation, bio, photo, sort_order) VAL
 INSERT INTO projects (number, title, body, project_date, sort_order) VALUES
   ('01', 'E-commerce platforms', 'Product, order, and customer flow built around your operation.', '2026-01-15', 1),
   ('02', 'Internal dashboards', 'A single source of truth that keeps your team aligned.', '2026-02-20', 2),
-  ('03', 'Client portals', 'Sales systems that shorten response time and remove friction.', '2026-03-12', 3),
+  ('03', 'Client portals', 'Sales systems that shorten response time and reduce delays.', '2026-03-12', 3),
   ('04', 'Workflow automation', 'Connected processes that reduce manual work and keep teams moving.', '2026-04-08', 4),
   ('05', 'CRM & sales systems', 'Better lead management, faster follow-up, and clearer customer journeys.', '2026-05-18', 5);

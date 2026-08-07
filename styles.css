@@ -85,13 +85,15 @@ main { position: relative; padding-top: 109px; }
 .topbar-actions .btn { min-width: 120px; height: 45px; padding: 0 16px; font-size: 16px; font-weight: 500; letter-spacing: -.05em; }
 .topbar-actions .btn-secondary { width: 137px; }
 .topbar-actions .btn-primary { width: 144px; }
-.btn, .pill-btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-weight: 600; white-space: nowrap; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.btn, .pill-btn { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 999px; font: inherit; font-weight: 600; white-space: nowrap; cursor: pointer; appearance: none; -webkit-appearance: none; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .btn:hover, .pill-btn:hover { transform: translateY(-2px); }
 .btn:active, .pill-btn:active { transform: translateY(0) scale(.98); }
 .btn { padding: 15px 25px; font-size: 18px; }
 .btn-outline, .btn-secondary { border: 1px solid var(--line); background: #fff; }
 .pill-btn, .btn-primary { background: #3376ff; color: #fff; box-shadow: 0 14px 28px rgba(51, 118, 255, .2); }
 .btn-primary:hover { background: #2869ed; box-shadow: 0 18px 34px rgba(51, 118, 255, .28); }
+.btn-primary:focus-visible { outline: 2px solid rgba(51, 118, 255, .55); outline-offset: 3px; }
+.btn-primary:disabled { cursor: wait; opacity: .7; transform: none; box-shadow: none; }
 .btn-secondary:hover { border-color: #d9e4fa; background: #f8fbff; }
 .btn svg { width: 17px; height: 17px; stroke-width: 2.5; }
 .pill-btn { padding: 11px 19px; }
@@ -100,12 +102,19 @@ main { position: relative; padding-top: 109px; }
 .hero {
   position: sticky;
   top: 109px;
-  z-index: 1;
+  z-index: 0;
   width: min(1240px, 100%);
   height: calc(100vh - 109px);
   min-height: 680px;
   margin: auto;
   padding: 18px 28px 64px;
+}
+
+main > .section,
+main > .cta,
+main > .footer {
+  position: relative;
+  z-index: 2;
 }
 .hero-copy { position: relative; z-index: 2; max-width: 1280px; margin: 124px auto 0; text-align: center; }
 .eyebrow, .section-label { margin: 0 0 16px; color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
@@ -405,6 +414,8 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 .contact-form { display: grid; gap: 14px; max-width: 620px; margin-top: 28px; }
 .contact-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .contact-form label { display: grid; gap: 7px; color: #9eb7d8; font-size: 12px; font-weight: 700; }
+.contact-form-label { color: inherit; font: inherit; }
+.contact-form-label i { color: #e25555; font-style: normal; }
 .contact-form input, .contact-form textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1px solid rgba(130,184,255,.24); border-radius: 12px; color: #fff; background: rgba(255,255,255,.07); font: inherit; resize: vertical; }
 .contact-form input:focus, .contact-form textarea:focus { outline: 2px solid rgba(130,184,255,.6); outline-offset: 2px; }
 .contact-form-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -950,6 +961,8 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 }
 
 .cta-blueprint-copy {
+  position: relative;
+  z-index: 2;
   transform-style: preserve-3d;
   padding: clamp(24px, 2.6vw, 32px);
   background: #052146;
@@ -991,6 +1004,10 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 }
 
 .cta-blueprint .cta-button {
+  position: relative;
+  z-index: 4;
+  pointer-events: auto;
+  cursor: pointer;
   background: #3376ff;
   background-image: none !important;
   color: #fff;
@@ -1002,8 +1019,12 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
 }
 
 .cta-blueprint-panel {
+  position: relative;
+  z-index: 1;
   transform-style: preserve-3d;
-  min-height: 100%;
+  height: 380px;
+  min-height: 380px;
+  box-sizing: border-box;
   padding: clamp(20px, 2.2vw, 26px);
   background: #fff;
   border-left: 1px solid #dfe7f2;
@@ -1129,6 +1150,36 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
   background: #3376ff;
 }
 
+.cta-form-panel .contact-form {
+  max-width: none;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.cta-form-panel {
+  overflow-y: auto;
+}
+
+.cta-form-panel .contact-form label {
+  color: #52637a;
+}
+
+.cta-form-panel .contact-form input,
+.cta-form-panel .contact-form textarea {
+  color: #102442;
+  background: #f8fafc;
+  border-color: #d7e1ee;
+}
+
+.cta-form-panel .contact-form input:focus,
+.cta-form-panel .contact-form textarea:focus {
+  outline-color: rgba(51, 118, 255, .5);
+}
+
+.cta-form-panel .contact-form-actions span {
+  color: #64748b;
+}
+
 @media (max-width: 820px) {
   .cta.cta-blueprint {
     grid-template-columns: 1fr;
@@ -1139,6 +1190,8 @@ h1 { margin: 0 auto 20px; max-width: 1280px; font-size: 60px; line-height: 60px;
   }
 
   .cta-blueprint-panel {
+    height: 430px;
+    min-height: 430px;
     border-top: 1px solid #dfe7f2;
     border-left: 0;
   }

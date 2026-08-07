@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
 import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -160,7 +160,6 @@ function JourneySignal() {
       '.advantage-aside',
       '.advantage .adv-card:nth-child(3)',
       '.partnership-orb-target',
-      '.cta-button',
       '.journey-destination',
     ];
     let frame = 0;
@@ -378,7 +377,7 @@ function Hero() {
 
 function IntroSection() {
   return <motion.section className="section intro" id="about" aria-labelledby="about-title" aria-describedby="about-description" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .18 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
-    <motion.div className="intro-heading" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .8, ease: 'easeOut' }}><div><p className="section-label">Build</p><h2 id="about-title">What we <span>do?</span></h2><p className="section-copy" id="about-description">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Problem</strong><p>Disconnected tools and manual tasks create friction that slows your business down.</p></aside></motion.div>
+    <motion.div className="intro-heading" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .8, ease: 'easeOut' }}><div><p className="section-label">Build</p><h2 id="about-title">What we <span>do?</span></h2><p className="section-copy" id="about-description">We design and build custom systems that replace manual work, disconnected tools, and slow operations.</p></div><aside><strong>The Challenge</strong><p>Disconnected tools and manual tasks create delays that slow your business down.</p></aside></motion.div>
     <motion.div className="work-surface" initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ delay: .12, duration: 1, ease: [0.22, 1, 0.36, 1] }}><motion.div className="work-toolbar" initial={{ opacity: 0, y: -14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .3, duration: .6 }}><div className="work-year"><button aria-label="Previous year">‹</button><span>2026</span><button aria-label="Next year">›</button></div><div className="work-address">◉ <span className="system-address-typing">https://xnr-it-solutions.com/</span></div><div className="work-tools"><i>✦</i><i>×</i></div></motion.div><motion.div className="work-status" initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .45, duration: .65 }}><b>Building Success</b><span>●</span></motion.div><motion.div className="work-canvas" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .58, duration: .8 }}><motion.div className="work-search" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false }} transition={{ delay: .72, duration: .7 }}><span>⌕</span><em>Search your next improvement</em></motion.div><motion.div className="work-empty" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false }} transition={{ delay: .9, duration: .9 }}><div className="work-activity" aria-label="Live workflow activity"><motion.div className="activity-health" initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .12, duration: .8 }}><div><span>Automation meter</span><strong>82%</strong></div><i className="activity-progress"><b /></i><svg className="activity-line-chart" viewBox="0 0 260 72" preserveAspectRatio="none" aria-label="Automation performance rising over time" role="img"><motion.path className="chart-line" d="M0 62 C24 55 31 44 52 48 S78 36 94 42 S120 24 140 33 S163 17 181 27 S208 8 226 18 S245 5 260 10" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: false }} transition={{ delay: .42, duration: 1.55, ease: 'easeOut' }} /><motion.circle cx="226" cy="18" r="3" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 1.32, duration: .35 }} /><motion.circle cx="260" cy="10" r="3" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 1.5, duration: .35 }} /></svg><small>+12% business efficiency</small></motion.div><motion.div className="activity-metrics" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .62, duration: .8 }}><div><span>Sales pipeline</span><strong>$48.2k</strong><em>+24.6% this month</em></div><div><span>ROI forecast</span><strong>3.8x</strong><em>next quarter</em></div><div className="activity-bars" aria-label="Sales growth chart">{Array.from({ length: 8 }, (_, index) => <motion.i key={index} initial={{ scaleY: .15 }} whileInView={{ scaleY: 1 }} viewport={{ once: false }} transition={{ delay: .9 + index * .11, duration: .58, ease: 'easeOut' }} />)}</div></motion.div><motion.div className="activity-feed" initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: 1.55, duration: .8 }}><div className="activity-feed-heading"><span>Business activity</span><small>Live</small></div><div className="activity-row"><i className="activity-dot is-blue" /><span>Revenue calculation completed</span><time>2m</time></div><div className="activity-row"><i className="activity-dot is-green" /><span>Sales workflow automated</span><time>8m</time></div><div className="activity-row"><i className="activity-dot is-violet" /><span>Investment forecast updated</span><time>14m</time></div></motion.div></div></motion.div></motion.div></motion.div>
   </motion.section>;
 }
@@ -592,6 +591,7 @@ export function Team() {
 
 function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
+  const [formValid, setFormValid] = useState(false);
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
@@ -610,6 +610,7 @@ function ContactForm() {
         body: JSON.stringify(values),
       });
       form.reset();
+      setFormValid(false);
       setStatus(result.message || 'Thanks. We will get back to you soon.');
     } catch (submitError) {
       setError(submitError.message);
@@ -618,15 +619,17 @@ function ContactForm() {
     }
   }
 
-  return <form className="contact-form" onSubmit={handleSubmit} noValidate>
-    <div className="contact-form-row"><label>Name<input name="name" type="text" autoComplete="name" minLength="2" maxLength="120" required /></label><label>Email<input name="email" type="email" autoComplete="email" maxLength="254" required /></label></div>
-    <label>How can we help?<textarea name="message" rows="4" minLength="10" maxLength="4000" required /></label>
+  return <form className="contact-form" onSubmit={handleSubmit} onInput={(event) => setFormValid(event.currentTarget.checkValidity())}>
+    <div className="contact-form-row"><label><span className="contact-form-label">Name <i aria-hidden="true">*</i></span><input name="name" type="text" autoComplete="name" minLength="2" maxLength="120" required aria-required="true" /></label><label><span className="contact-form-label">Email <i aria-hidden="true">*</i></span><input name="email" type="email" autoComplete="email" maxLength="254" required aria-required="true" /></label></div>
+    <label><span className="contact-form-label">How can we help? <i aria-hidden="true">*</i></span><textarea name="message" rows="3" minLength="10" maxLength="4000" required aria-required="true" /></label>
     <label className="contact-form-honeypot" aria-hidden="true">Website<input name="website" type="text" tabIndex="-1" autoComplete="off" /></label>
-    <div className="contact-form-actions"><button className="btn btn-primary" type="submit" disabled={submitting}>{submitting ? 'Sending…' : 'Send inquiry'} <ArrowRight /></button><span aria-live="polite">{status || error}</span></div>
+    <div className="contact-form-actions"><button className="btn btn-primary" type="submit" disabled={submitting || !formValid}>{submitting ? 'Sending…' : 'Send inquiry'} <ArrowRight /></button><span aria-live="polite">{status || error}</span></div>
   </form>;
 }
 
 export function Footer() {
+  const [showContactForm, setShowContactForm] = useState(false);
+
   return <>
     <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <motion.div className="partnership-invite" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .75, ease: 'easeOut' }}>
@@ -636,28 +639,32 @@ export function Footer() {
         <a className="btn btn-primary partnership-button" href="#contact">Start a Conversation <ArrowRight /></a>
       </motion.div>
     </motion.section>
-    <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 64, scale: .96, filter: 'blur(10px)' }} whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} viewport={{ once: false, amount: .2 }} transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <div className="cta-blueprint-copy">
-        <motion.p className="section-label cta-label" initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Ready to move faster?</motion.p>
-        <motion.h2 id="cta-title" initial={{ opacity: 0, x: -42, rotateY: -8 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build a system that <span>powers your gr<span className="journey-destination">o</span>wth.</span></motion.h2>
-        <motion.p className="cta-copy" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
-        <motion.div className="cta-actions" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ delay: .42, duration: .8, ease: 'easeOut' }}>
-          <a className="btn btn-primary cta-button" href="#contact" aria-label="Start a custom software and automation project with XNR IT Solutions">Build Better Together <ArrowRight /></a>
+        <motion.p className="section-label cta-label" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Ready to move faster?</motion.p>
+        <motion.h2 id="cta-title" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build a system that <span>powers your gr<span className="journey-destination">o</span>wth.</span></motion.h2>
+        <motion.p className="cta-copy" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Get custom software, business systems, and workflow automation engineered around how your business runs.</motion.p>
+        <motion.div className="cta-actions" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .42, duration: .8, ease: 'easeOut' }}>
+          <button className="btn btn-primary cta-button" type="button" onClick={() => setShowContactForm((current) => !current)} aria-expanded={showContactForm} aria-controls="cta-contact-form"><AnimatePresence mode="wait" initial={false}><motion.span key={showContactForm ? 'back' : 'build'} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: .18, ease: 'easeOut' }}>{showContactForm ? 'Back to workflow' : 'Build Better Together'}</motion.span></AnimatePresence> <ArrowRight /></button>
           <span>Strategy <i /> Systems <i /> Automation</span>
         </motion.div>
-        <ContactForm />
       </div>
-      <motion.div className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business friction into working systems" initial={{ opacity: 0, x: 72, rotateY: 6 }} whileInView={{ opacity: 1, x: 0, rotateY: 0 }} viewport={{ once: false, amount: .35 }} transition={{ delay: .28, duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-        <div className="cta-panel-header"><div><span className="cta-panel-kicker">The XNR workflow</span><strong>From friction to flow</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
+      <AnimatePresence mode="wait" initial={false}>
+      {showContactForm ? <motion.div key="contact-form" id="cta-contact-form" className="cta-blueprint-panel cta-form-panel" aria-label="Project inquiry form" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: .3, ease: 'easeOut' }}>
+        <div className="cta-panel-header"><div><span className="cta-panel-kicker">Start a conversation</span><strong>Tell us about your project</strong></div></div>
+        <ContactForm />
+      </motion.div> : <motion.div key="workflow" className="cta-blueprint-panel" aria-label="How XNR IT Solutions turns business challenges into working systems" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 14 }} transition={{ duration: .3, ease: 'easeOut' }}>
+        <div className="cta-panel-header"><div><span className="cta-panel-kicker">The XNR workflow</span><strong>From challenge to solution</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
         <ol className="cta-steps">
-          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .52, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">01</span><div><h3>Find the friction</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></motion.li>
-          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .64, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></motion.li>
-          <motion.li className="cta-step" initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: false }} transition={{ delay: .76, duration: .75, ease: 'easeOut' }}><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></motion.li>
+          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .52, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">01</span><div><h3>Understand the challenge</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></motion.li>
+          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .64, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></motion.li>
+          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .76, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></motion.li>
         </ol>
         <div className="cta-panel-footer"><span>One partner from strategy to scale</span><span className="cta-panel-line" aria-hidden="true"><i /></span></div>
-      </motion.div>
+      </motion.div>}
+      </AnimatePresence>
     </motion.section>
-    <motion.footer className="footer" aria-label="XNR IT Solutions site footer" initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .14 }} transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1], delay: .12 }}>
+    <motion.footer className="footer" aria-label="XNR IT Solutions site footer" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .14 }} transition={{ duration: .7, ease: 'easeOut', delay: .12 }}>
       <div className="footer-brand"><div className="footer-logo"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></div><p>Custom software, business systems, and workflow automation for growing businesses.</p><h4>Follow XNR IT Solutions</h4><div className="socials"><a href="https://www.facebook.com" aria-label="XNR IT Solutions on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.5 1.6-1.5h1.7V4.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.3v3h2.8v8z" /></svg></a><a href="https://www.instagram.com" aria-label="XNR IT Solutions on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="instagram-gradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#F58529" /><stop offset=".45" stopColor="#DD2A7B" /><stop offset="1" stopColor="#5E3BEA" /></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="5" fill="url(#instagram-gradient)" /><rect x="7" y="7" width="10" height="10" rx="3" fill="none" stroke="white" strokeWidth="1.7" /><circle cx="12" cy="12" r="2.5" fill="none" stroke="white" strokeWidth="1.7" /><circle cx="17.2" cy="6.8" r="1" fill="white" /></svg></a><a href="https://www.tiktok.com" aria-label="XNR IT Solutions on TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25F4EE" d="M14.6 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 12 5a8 8 0 1 0 8 8V7.6c-2-.5-3.3-1.9-3.8-4.6z" /><path fill="#FE2C55" d="M13.6 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 11 5a8 8 0 1 0 8 8V7.6C17 7.1 15.7 5.7 15.2 3z" /><path fill="white" d="M14.1 3v10.3a3.7 3.7 0 1 1-3-3.6v3.2a1.3 1.3 0 1 0 1.7 1.2V3h3.1c.3 1.5 1.2 2.5 2.6 3v3a6 6 0 0 1-2.6-1V13a5 5 0 1 1-5-5c.4 0 .8 0 1.2.1V5.6A8 8 0 0 0 11.5 5a8 8 0 1 0 8 8V7.6c-2-.5-3.3-1.9-3.8-4.6z" /></svg></a><a href="https://api.whatsapp.com/send?phone=639667964414" aria-label="Contact XNR IT Solutions on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.2-4.1A8.5 8.5 0 1 1 20.5 11.5Z" fill="#25D366" /><path d="M8.5 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .4-.1.6l-.6.7c.7 1.3 1.7 2.3 3 3l.7-.6c.2-.2.4-.2.6-.1l1.9.8c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.5.3-1.2.4-1.8.2-2.1-.6-4.2-2.5-5.6-4.3-1-.9-1.8-2-2.2-3.1-.2-.7-.1-1.3.1-1.8Z" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></a></div></div><div className="footer-column"><h4>Company</h4><a href="#about">About XNR</a><a href="#about">Our Approach</a><a href="#services">Business Solutions</a><a href="#contact">Careers</a></div><div className="footer-column"><h4>Services</h4><a href="#services">Business Process Automation</a><a href="#services">CRM & Sales Automation</a><a href="#services">Inventory Systems</a><a href="#services">Custom Software Development</a><a href="#services">Internal Dashboards</a></div><div className="footer-column"><h4>Industries & Projects</h4><a href="#projects">E-commerce Systems</a><a href="#projects">Client Portals</a><a href="#projects">Operations Dashboards</a><a href="#projects">Enterprise Resource Planning</a><a href="#partners">Partners & Clients</a></div><div className="footer-bottom"><span>© 2026 XNR IT Solutions. All rights reserved.</span><span><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></span></div><div className="footer-watermark">XNR</div>
     </motion.footer>
   </>;
