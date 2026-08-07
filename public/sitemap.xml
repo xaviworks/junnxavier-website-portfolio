@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://xnr-it-solutions.com/</loc>
+    <loc>https://xnritsolutions.com/</loc>
+  </url>
+  <url>
+    <loc>https://xnritsolutions.com/team</loc>
+  </url>
+  <url>
+    <loc>https://xnritsolutions.com/insights</loc>
+  </url>
+  <url>
+    <loc>https://xnritsolutions.com/services</loc>
+  </url>
+  <url>
+    <loc>https://xnritsolutions.com/projects</loc>
+  </url>
+  <url>
+    <loc>https://xnritsolutions.com/contact</loc>
   </url>
 </urlset>

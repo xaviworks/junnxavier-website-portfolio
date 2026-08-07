@@ -382,7 +382,7 @@ function IntroSection() {
   </motion.section>;
 }
 
-function Projects() {
+export function Projects() {
   const [projects, setProjects] = useState([]);
   const [projectsError, setProjectsError] = useState('');
   const [projectsLoading, setProjectsLoading] = useState(true);
@@ -468,7 +468,7 @@ function Projects() {
   </motion.section>;
 }
 
-function Advantage() {
+export function Advantage() {
   const advantageHeadline = 'Not just developers. We think like business owners.';
   const advantageRef = useRef(null);
   const wasAdvantageVisible = useRef(false);
@@ -589,7 +589,7 @@ export function Team() {
   </section>;
 }
 
-function ContactForm() {
+export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
   const [formValid, setFormValid] = useState(false);
   const [status, setStatus] = useState('');
@@ -688,5 +688,5 @@ export default function App() {
     const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
     requestAnimationFrame(() => requestAnimationFrame(scrollToTarget));
   }, []);
-  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="#home" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="#contact">Contact Sales</a><a className="btn btn-primary" href="#contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
+  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Services</a><a href="/projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/contact">Contact Sales</a><a className="btn btn-primary" href="/contact">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }

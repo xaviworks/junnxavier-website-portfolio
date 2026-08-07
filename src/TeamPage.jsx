@@ -22,14 +22,14 @@ export default function TeamPage() {
         <div className="header-main">
           <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>
           <nav className="nav-links" aria-label="Primary navigation">
-            <a href="/#services">Services</a>
-            <a href="/#projects">Projects</a>
+            <a href="/services">Services</a>
+            <a href="/projects">Projects</a>
             <a className="is-current" href="/team" aria-current="page">Team</a>
             <a href="/insights">Insights</a>
           </nav>
         </div>
         <div className="header-fill" />
-        <div className="topbar-actions"><a className="btn btn-secondary" href="/#contact">Contact Sales</a><a className="btn btn-primary" href="/#contact">Get Started <ArrowRight /></a></div>
+        <div className="topbar-actions"><a className="btn btn-secondary" href="/contact">Contact Sales</a><a className="btn btn-primary" href="/contact">Get Started <ArrowRight /></a></div>
         <div className="header-spacer" />
       </div>
     </header>
