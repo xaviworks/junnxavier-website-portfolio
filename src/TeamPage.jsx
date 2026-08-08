@@ -29,7 +29,7 @@ export default function TeamPage() {
           </nav>
         </div>
         <div className="header-fill" />
-        <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/get-started">Get Started <ArrowRight /></a></div>
+        <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/#contact">Get Started <ArrowRight /></a></div>
         <div className="header-spacer" />
       </div>
     </header>

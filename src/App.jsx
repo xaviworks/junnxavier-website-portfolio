@@ -449,7 +449,7 @@ export function Projects() {
 
   return <motion.section className="section projects" id="projects" initial={{ opacity: 0, y: 64 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .12 }} transition={{ duration: .7, ease: 'easeOut' }}>
     <p className="section-label">Projects</p>
-    <h2>Let’s Build a System That Powers Your Growth</h2>
+    <h2 id="projects-title">Let’s Build a System That Powers Your Growth</h2>
     <p className="section-copy">Custom software and automation, engineered around how your business runs.</p>
     <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
     {projectsError ? <p className="api-status is-error" role="alert">Unable to load projects right now.</p> : projectsLoading ? <p className="api-status">Loading projects…</p> : !projects.length ? <p className="api-status">No projects published yet.</p> : <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
@@ -689,6 +689,18 @@ export default function App() {
 
     const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
     requestAnimationFrame(() => requestAnimationFrame(scrollToTarget));
+  }, []);
+  useEffect(() => {
+    const anchoredRoutes = { '/get-started': '/#contact' };
+    const useSectionAnchor = (event) => {
+      const link = event.target.closest('a');
+      const destination = link && anchoredRoutes[link.getAttribute('href')];
+      if (!destination || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      window.location.assign(destination);
+    };
+    document.addEventListener('click', useSectionAnchor);
+    return () => document.removeEventListener('click', useSectionAnchor);
   }, []);
   return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Services</a><a href="/projects">Projects</a><a href="/team">Team</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/get-started">Get Started <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }
