@@ -1,0 +1,53 @@
+.connect-page { min-height: 100svh; padding: max(20px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom)); background: radial-gradient(ellipse at 50% 5%, #e6efff, transparent 65%), #f5f7fb; color: #172b47; }
+.connect-wrap { max-width: 440px; margin: 0 auto; }
+.connect-topline { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.connect-topline > a { display: flex; align-items: center; min-height: 44px; }
+.connect-topline img { width: 76px; height: 44px; object-fit: contain; }
+.connect-topline button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #dce4f0; border-radius: 50%; color: #284368; background: #ffffffb3; cursor: pointer; }
+.connect-card { overflow: hidden; border: 1px solid #e0e7f2; border-radius: 28px; background: #fff; box-shadow: 0 24px 70px #193e6c12; }
+.connect-body { padding: 0 24px 12px; }
+.connect-page h1 { margin: 0 0 10px; font-size: clamp(26px, 6.8vw, 32px); line-height: 1.15; letter-spacing: -.045em; color: #152844; }
+.connect-intro { margin: 0 0 22px; color: #687990; font-size: 14px; line-height: 1.65; }
+.connect-save { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 16px; border-radius: 14px; color: #fff; background: #3376ff; font-size: 15px; font-weight: 600; box-shadow: 0 8px 18px #3376ff22; }
+.connect-save-note { margin: 10px 0 18px; color: #7e8b9d; font-size: 10px; text-align: center; }
+.connect-quick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 22px; }
+.connect-quick a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 76px; padding: 10px 4px; border: 1px solid #e6ecf4; border-radius: 14px; background: #fafcff; font-size: 11px; font-weight: 600; }
+.connect-quick svg { width: 22px; height: 22px; color: #42648e; stroke-width: 1.8; }
+.connect-links { border-top: 1px solid #e5eaf1; }
+.connect-links > a { display: flex; align-items: center; gap: 12px; min-height: 80px; padding: 14px 0; border-bottom: 1px solid #e5eaf1; }
+.connect-link-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; background: #f0f5fc; border-radius: 11px; color: #3c6bab; }
+.connect-link-icon svg { width: 21px; height: 21px; }
+.connect-links strong { display: block; font-size: 13px; font-weight: 600; }
+.connect-links small { display: block; margin-top: 3px; color: #79899e; font-size: 11px; }
+.connect-links > a > svg { width: 18px; height: 18px; flex-shrink: 0; margin-left: auto; color: #5c7390; }
+.connect-explore { display: flex; align-items: center; justify-content: space-around; gap: 12px; }
+.connect-explore a { display: flex; align-items: center; gap: 6px; min-height: 52px; font-size: 13px; color: #3e5d81; }
+.connect-explore > span { width: 1px; height: 14px; background: #dce4ef; }
+.connect-share-status { color: #3e608b; font-size: 14px; text-align: center; }
+.connect-share-status:not(:empty) { margin-top: 16px; }
+.connect-copy-label { display: grid; gap: 6px; margin-top: 12px; font-size: 14px; }
+.connect-copy-label input { width: 100%; min-height: 48px; padding: 10px; border: 1px solid #dce4f0; border-radius: 10px; font-size: 16px; }
+.connect-footer { display: grid; justify-items: center; gap: 2px; margin-top: 22px; color: #8b99ac; font-size: 10px; }
+.connect-footer a { display: flex; align-items: center; gap: 4px; min-height: 44px; color: #526b8b; }
+.connect-page a:focus-visible, .connect-page button:focus-visible, .connect-page input:focus-visible { outline: 3px solid #2867e5; outline-offset: 3px; }
+@media (hover: hover) { .connect-save:hover { background: #1d54c2; } .connect-quick a:hover, .connect-links > a:hover { background: #f3f7fd; } }
+@media (min-width: 768px) { .connect-page { padding-top: 36px; padding-bottom: 36px; } }
+@media (max-width: 360px) { .connect-page { padding-right: 12px; padding-left: 12px; } .connect-body { padding-right: 16px; padding-left: 16px; } }
+.connect-cover { position: relative; overflow: hidden; height: 190px; padding: 24px; background: linear-gradient(120deg, #071f40, #0d4180); color: #fff; }
+.connect-kicker { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; font-size: 8px; letter-spacing: .14em; font-weight: 700; }
+.connect-kicker i { width: 5px; height: 5px; border-radius: 50%; background: #8dcbff; box-shadow: 0 0 12px #8dcbff; }
+.connect-cover p { position: relative; z-index: 1; margin: 26px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 27px; line-height: 1.12; letter-spacing: -.03em; font-weight: 400; }
+.connect-cover strong { color: #bcd9ff; font-weight: 500; }
+.connect-cover-mark { position: absolute; right: 24px; bottom: 22px; color: #a1c8fa; font-size: 34px; }
+.connect-orbit { position: absolute; top: -80px; right: -120px; width: 320px; height: 320px; border: 1px solid #a3c9ff25; border-radius: 50%; }
+.connect-orbit span { position: absolute; inset: 30px; border: 1px solid #a3c9ff25; border-radius: 50%; }
+.connect-orbit span:nth-child(2) { inset: 60px; }
+.connect-orbit b { position: absolute; top: 89px; left: 8px; width: 12px; height: 12px; border-radius: 50%; background: #a5d9ff; box-shadow: 0 0 32px #82baff; animation: connect-glow 4s ease-in-out infinite alternate; }
+.connect-identity { position: relative; display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-top: -28px; margin-bottom: 20px; }
+.connect-logo { display: grid; place-items: center; width: 88px; height: 76px; background: #fff; border: 1px solid #e5eaf1; border-radius: 18px; box-shadow: 0 5px 14px #17335308; }
+.connect-logo img { width: 74px; height: 60px; object-fit: contain; }
+.connect-badge { display: flex; align-items: center; gap: 5px; padding: 6px 8px; margin-bottom: 3px; color: #3d618f; background: #f0f5fc; border-radius: 99px; font-size: 10px; }
+.connect-save > svg:last-child { margin-left: auto; }
+@keyframes connect-glow { to { opacity: .5; box-shadow: 0 0 12px #82baff; } }
+@media (max-width: 360px) { .connect-body { padding-right: 18px; padding-left: 18px; } .connect-cover { padding: 20px; } .connect-cover p { font-size: 24px; } }
+@media (prefers-reduced-motion: reduce) { .connect-orbit b { animation: none; } }

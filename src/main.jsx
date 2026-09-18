@@ -6,6 +6,7 @@ import TeamPage from './TeamPage.jsx';
 import InsightsPage from './InsightsPage.jsx';
 import SlugPage from './SlugPage.jsx';
 import BookingPage from './BookingPage.jsx';
+import ConnectPage from './ConnectPage.jsx';
 import '../styles.css';
 
 const queryClient = new QueryClient();
@@ -19,8 +20,8 @@ const slugPage = ['/services', '/projects'].includes(cleanPath) ? cleanPath.slic
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <JourneySignal />
-      {isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
+      {cleanPath !== '/connect' && <JourneySignal />}
+      {cleanPath === '/connect' ? <ConnectPage /> : isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
     </QueryClientProvider>
   </React.StrictMode>,
 );
