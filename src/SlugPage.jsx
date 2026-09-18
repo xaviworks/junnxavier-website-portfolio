@@ -1,10 +1,11 @@
+import MobileNavigation from './MobileNavigation.jsx';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useLayoutEffect } from 'react';
 import { Advantage, Footer, Projects } from './App.jsx';
 
 function PageHeader({ activePage }) {
   return <header className="topbar team-page-topbar">
-    <div className="topbar-inner">
+    <div className="topbar-inner"><MobileNavigation />
       <div className="header-spacer" />
       <div className="header-main">
         <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>

@@ -1,3 +1,4 @@
+import MobileNavigation from './MobileNavigation.jsx';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
@@ -6,7 +7,7 @@ const isValidBookingUrl = /^https:\/\/cal\.com\/[A-Za-z0-9._~-]+(?:\/[A-Za-z0-9.
 
 function PageHeader() {
   return <header className="topbar team-page-topbar">
-    <div className="topbar-inner">
+    <div className="topbar-inner"><MobileNavigation />
       <div className="header-spacer" />
       <div className="header-main">
         <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>

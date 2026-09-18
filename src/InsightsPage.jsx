@@ -1,3 +1,4 @@
+import MobileNavigation from './MobileNavigation.jsx';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { apiFetch } from './lib/api.js';
@@ -35,7 +36,7 @@ export default function InsightsPage() {
 
   return <div className="page-shell team-page insights-page">
     <header className="topbar team-page-topbar">
-      <div className="topbar-inner">
+      <div className="topbar-inner"><MobileNavigation />
         <div className="header-spacer" />
         <div className="header-main">
           <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>
