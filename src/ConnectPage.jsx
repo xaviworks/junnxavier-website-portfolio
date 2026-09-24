@@ -43,7 +43,7 @@ export default function ConnectPage() {
           <p className="connect-intro">Custom software development, business systems, and workflow automation that help your business work smarter and grow.</p>
           <a className="connect-save" href="/xnr-it-solutions.vcf" download="XNR-IT-Solutions.vcf"><Download size={19} aria-hidden="true" /> Save Contact <ArrowRight size={18} aria-hidden="true" /></a>
           <p className="connect-save-note">Keep our details handy for your next big idea.</p>
-          <div className="connect-quick" aria-label="Contact XNR"><a href="tel:+639667964414"><Phone aria-hidden="true" /><span>Call us</span></a><a href="https://wa.me/639667964414"><MessageCircle aria-hidden="true" /><span>WhatsApp</span></a><a href="/#contact"><MessageCircle aria-hidden="true" /><span>Send inquiry</span></a></div>
+          <div className="connect-quick" aria-label="Contact XNR"><a href="tel:+639815864687"><Phone aria-hidden="true" /><span>Call us</span></a><a href="https://wa.me/639815864687"><MessageCircle aria-hidden="true" /><span>WhatsApp</span></a><a href="/#contact"><MessageCircle aria-hidden="true" /><span>Send inquiry</span></a></div>
           <div className="connect-links">
             <a href="/book-a-call"><span className="connect-link-icon"><CalendarDays aria-hidden="true" /></span><span><strong>Let’s talk about your goals</strong><small>Book a quick consultation</small></span><ArrowUpRight aria-hidden="true" /></a>
             <a href="/"><span className="connect-link-icon"><Globe aria-hidden="true" /></span><span><strong>Discover XNR</strong><small>Meet your next technology partner</small></span><ArrowUpRight aria-hidden="true" /></a>
