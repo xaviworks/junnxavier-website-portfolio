@@ -7,6 +7,9 @@ import InsightsPage from './InsightsPage.jsx';
 import SlugPage from './SlugPage.jsx';
 import BookingPage from './BookingPage.jsx';
 import ConnectPage from './ConnectPage.jsx';
+import KavioPage from './KavioPage.jsx';
+import KavioPrivacyPage from './KavioPrivacyPage.jsx';
+import KavioDeleteAccountPage from './KavioDeleteAccountPage.jsx';
 import '../styles.css';
 
 const queryClient = new QueryClient();
@@ -21,7 +24,7 @@ createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       {cleanPath !== '/connect' && <JourneySignal />}
-      {cleanPath === '/connect' ? <ConnectPage /> : isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
+      {cleanPath === '/kavio/delete-account' ? <KavioDeleteAccountPage /> : cleanPath === '/kavio/privacy' ? <KavioPrivacyPage /> : cleanPath === '/kavio' ? <KavioPage /> : cleanPath === '/connect' ? <ConnectPage /> : isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
     </QueryClientProvider>
   </React.StrictMode>,
 );

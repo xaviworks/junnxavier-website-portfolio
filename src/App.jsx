@@ -389,6 +389,8 @@ export function Projects() {
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [trackX, setTrackX] = useState(0);
+  const [galleryPaused, setGalleryPaused] = useState(false);
+  const [lastInteraction, setLastInteraction] = useState(0);
   const galleryRef = useRef(null);
   const trackInnerRef = useRef(null);
   const loopStart = projects.length * 2;
@@ -421,10 +423,13 @@ export function Projects() {
     if (next >= loopEnd) return loopStart;
     return next;
   }), [loopEnd, loopStart, projects.length]);
+  const noteInteraction = () => setLastInteraction(Date.now());
   useEffect(() => {
-    const timer = window.setInterval(() => move(1), 3000);
-    return () => window.clearInterval(timer);
-  }, [move]);
+    if (!projects.length || galleryPaused) return undefined;
+    const remainingPause = Math.max(0, 8000 - (Date.now() - lastInteraction));
+    const timer = window.setTimeout(() => move(1), Math.max(5000, remainingPause));
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, galleryPaused, lastInteraction, move, projects.length]);
   useLayoutEffect(() => {
     let frame;
     const updateTrackPosition = () => {
@@ -453,19 +458,21 @@ export function Projects() {
     <h2 id="projects-title">Let’s Build a System That Powers Your Growth</h2>
     <p className="section-copy">Custom software and automation, engineered around how your business runs.</p>
     <div className="feature-grid">{['Custom-Built From Scratch', 'Business-First Thinking', 'Scalable Architecture'].map((title, index) => <motion.article className="feature-card" key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ duration: .5, delay: index * .1 }}><h3>{title}</h3><p>{title === 'Custom-Built From Scratch' ? 'No off-the-shelf systems.' : title === 'Business-First Thinking' ? 'We design logic before code.' : 'Built to grow with you.'}</p></motion.article>)}</div>
-    {projectsError ? <p className="api-status is-error" role="alert">Unable to load projects right now.</p> : projectsLoading ? <p className="api-status">Loading projects…</p> : !projects.length ? <p className="api-status">No projects published yet.</p> : <div className="project-gallery" aria-label="XNR IT Solutions project gallery">
-      <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous project" onClick={() => move(-1)}>‹</button>
+    {projectsError ? <p className="api-status is-error" role="alert">Unable to load projects right now.</p> : projectsLoading ? <p className="api-status">Loading projects…</p> : !projects.length ? <p className="api-status">No projects published yet.</p> : <div className="project-gallery" aria-label="XNR IT Solutions project gallery" onMouseEnter={() => setGalleryPaused(true)} onMouseLeave={() => { setGalleryPaused(false); noteInteraction(); }} onFocusCapture={() => setGalleryPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { setGalleryPaused(false); noteInteraction(); } }}>
+      <button className="gallery-arrow gallery-prev" type="button" aria-label="Previous project" onClick={() => { noteInteraction(); move(-1); }}>‹</button>
       <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map((project, index) => {
         const leftIndex = activeIndex - 1;
         const rightIndex = activeIndex + 1;
+        const projectHref = project.title.trim().toLowerCase() === 'kavio' ? '/kavio' : null;
         return <motion.article data-carousel-index={index} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={`${project.number}-${index}`}>
           <div className="gallery-project-art" aria-hidden="true"><span className="gallery-window-dots"><i></i><i></i><i></i></span><span className="gallery-art-line line-one"></span><span className="gallery-art-line line-two"></span><span className="gallery-art-block block-one"></span><span className="gallery-art-block block-two"></span><span className="gallery-art-block block-three"></span></div>
           <div className="gallery-project-content"><div className="gallery-project-meta"><span>{project.number}</span><small>{project.date ? project.date.slice(0, 7) : 'Case study'}</small><ArrowUpRight size={17} strokeWidth={2.2} /></div><h3>{project.title}</h3><p>{project.body}</p></div>
+          {index === activeIndex ? projectHref ? <a className="gallery-project-hitarea" href={projectHref} aria-label={`View ${project.title} project`} /> : null : <button className="gallery-project-hitarea" type="button" aria-label={`Select ${project.title} project`} tabIndex={Math.abs(index - activeIndex) === 1 ? 0 : -1} onClick={() => { noteInteraction(); setActiveIndex(index); }} />}
         </motion.article>;
       })}</motion.div></div>
-      <button className="gallery-arrow gallery-next" type="button" aria-label="Next project" onClick={() => move(1)}>›</button>
+      <button className="gallery-arrow gallery-next" type="button" aria-label="Next project" onClick={() => { noteInteraction(); move(1); }}>›</button>
     </div>}
-    {projects.length > 0 && <div className="gallery-dots" aria-label="Choose a project">{projects.map((project, index) => <button key={project.number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${project.number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => setActiveIndex(loopStart + index)} />)}</div>}
+    {projects.length > 0 && <div className="gallery-dots" aria-label="Choose a project" onMouseEnter={() => setGalleryPaused(true)} onMouseLeave={() => { setGalleryPaused(false); noteInteraction(); }} onFocusCapture={() => setGalleryPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { setGalleryPaused(false); noteInteraction(); } }}>{projects.map((project, index) => <button key={project.number} className={index === activeIndex % projects.length ? 'is-active' : ''} type="button" aria-label={`Show project ${project.number}`} aria-current={index === activeIndex % projects.length ? 'true' : undefined} onClick={() => { noteInteraction(); setActiveIndex(loopStart + index); }} />)}</div>}
   </motion.section>;
 }
 

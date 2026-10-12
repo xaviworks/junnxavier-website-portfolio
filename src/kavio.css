@@ -1,0 +1,250 @@
+.kavio-page { background: #f8faf7; color: #173b35; }
+.kavio-wrap { max-width: 1240px; margin: 0 auto; padding: 88px 28px; }
+.kavio-nav { max-width: 1240px; margin: auto; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.kavio-nav img { width: 108px; }
+.kavio-nav nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
+.kavio-page .btn-primary { background: #17594b; border-color: #17594b; color: white; }
+.kavio-page .section-label { color: #51746b; letter-spacing: .14em; }
+.kavio-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; padding-top: 70px; padding-bottom: 110px; }
+.kavio-hero h1 { font-size: clamp(44px, 5.2vw, 72px); line-height: 1.06; letter-spacing: -.055em; margin: 20px 0 26px; }
+.kavio-hero h1 em { color: #39826b; font-style: normal; }
+.kavio-lead { font-size: 19px; line-height: 1.75; color: #587069; max-width: 550px; }
+.kavio-actions { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; margin-top: 30px; }
+.kavio-actions span { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+.kavio-overview { background: #fff; padding: 28px; border: 1px solid #dbe8df; border-radius: 26px; box-shadow: 0 26px 70px #173b3510; transform: rotate(2deg); }
+.kavio-overview-head { display: flex; align-items: center; gap: 14px; padding-bottom: 24px; }
+.kavio-overview-head p { font-size: 12px; color: #637b72; margin: 4px 0 0; }
+.kavio-monogram { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; background: #17594b; border-radius: 14px; color: #e4f9c6; font-size: 28px; font-weight: 700; }
+.kavio-tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.kavio-tool-grid > div { background: #f0f5ee; border-radius: 14px; padding: 20px 16px; }
+.kavio-tool-grid h2 { font-size: 16px; margin: 16px 0 8px; letter-spacing: -.02em; }
+.kavio-tool-grid p { font-size: 13px; line-height: 1.6; color: #62796f; }
+.kavio-overview-foot { display: flex; gap: 10px; align-items: center; padding-top: 22px; font-size: 13px; }
+.kavio-wrap > h2, .kavio-adapts h2, .kavio-ai h2 { font-size: clamp(32px, 3.6vw, 46px); line-height: 1.13; letter-spacing: -.045em; margin: 18px 0 24px; }
+.kavio-adapts { border-top: 1px solid #dbe8df; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 36px; }
+.kavio-adapts p, .kavio-ai p, .kavio-section-intro, .kavio-cta > p { color: #587069; line-height: 1.75; }
+.kavio-adapts article { padding: 30px; background: #eaf0e6; border-radius: 18px; }
+.kavio-adapts article span { font-size: 11px; letter-spacing: .12em; }
+.kavio-adapts h3 { font-size: 23px; line-height: 1.25; margin: 36px 0 16px; }
+.kavio-plans { scroll-margin-top: 24px; }
+.kavio-section-intro { max-width: 620px; }
+.kavio-plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 42px; }
+.kavio-plan-grid article { border: 1px solid #d6e2d7; border-radius: 22px; padding: 32px; background: #fff; }
+.kavio-plan-name { font-size: 12px; letter-spacing: .15em; font-weight: 700; margin: 24px 0 14px; }
+.kavio-plan-grid h3 { font-size: 28px; line-height: 1.2; letter-spacing: -.025em; margin-bottom: 20px; }
+.kavio-plan-grid p, .kavio-plan-grid li { font-size: 15px; line-height: 1.7; }
+.kavio-plan-grid ul { padding-left: 18px; margin: 26px 0 0; }
+.kavio-plan-grid li { padding: 7px 0 7px 3px; }
+.kavio-plan-grid .kavio-pro { background: #17594b; color: #f6fbf5; border-color: #17594b; }
+.kavio-plan-note { margin-top: 24px; padding-top: 20px; border-top: 1px solid #ffffff40; }
+.kavio-ai { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.kavio-ai-steps p { display: flex; align-items: center; gap: 18px; background: white; padding: 24px; border: 1px solid #dbe8df; border-radius: 14px; }
+.kavio-ai-steps svg { flex-shrink: 0; }
+.kavio-cta { text-align: center; padding-bottom: 120px; }
+.kavio-cta .btn { margin-top: 24px; }
+@media (max-width: 900px) { .kavio-hero { gap: 32px; } .kavio-adapts, .kavio-plan-grid { grid-template-columns: 1fr; } .kavio-plan-grid article { padding: 28px; } .kavio-ai { gap: 32px; } }
+@media (max-width: 640px) { .kavio-wrap { padding: 56px 20px; } .kavio-nav { padding: 20px; } .kavio-nav img { width: 80px; } .kavio-nav nav { gap: 14px; font-size: 12px; } .kavio-nav nav > .btn { display: none; } .kavio-hero, .kavio-ai { grid-template-columns: 1fr; } .kavio-overview { transform: none; padding: 20px; margin-top: 16px; } .kavio-tool-grid > div { padding: 16px 12px; } .kavio-lead { font-size: 17px; } .kavio-cta { padding-bottom: 76px; } }
+
+.kavio-hero-visual { position: relative; padding-top: 240px; }
+.kavio-hero-mascot { position: absolute; width: 290px; height: 290px; object-fit: contain; top: -20px; left: 50%; transform: translateX(-50%); }
+.kavio-brand-icon { width: 48px; height: 48px; object-fit: contain; }
+.kavio-plan-mascot { width: 100%; height: 190px; object-fit: contain; }
+.kavio-ai-mascot { display: block; width: 230px; height: 230px; object-fit: contain; margin: 0 auto 20px; }
+@media (max-width: 640px) { .kavio-hero-visual { padding-top: 210px; } .kavio-hero-mascot { width: 250px; height: 250px; top: -10px; } }
+
+/* App dashboard reference: navy, mint, and softly rounded surfaces. */
+@media (min-width: 901px) {
+  .kavio-dashboard {
+    transform: perspective(1400px) rotateY(-7deg) rotateZ(2deg) scale(.97);
+    transform-origin: center;
+  }
+}
+.kavio-page { background: #f2f6f3; color: #0c2340; }
+.kavio-page .btn-primary, .kavio-plan-grid .kavio-pro { background: #0c2340; border-color: #0c2340; }
+.kavio-page .btn-primary { border-radius: 999px; }
+.kavio-hero h1 em { color: #239b83; }
+.kavio-adapts article { background: #e6f5ed; border-radius: 28px; }
+.kavio-plan-grid article { border-radius: 30px; }
+.kavio-dashboard { max-width: 470px; width: 100%; margin: auto; padding: 26px; background: #f1f5f2; border: 1px solid #fff; border-radius: 38px; box-shadow: 0 28px 80px #10294018; }
+.kavio-dashboard-brand { display: flex; gap: 9px; align-items: center; margin-bottom: 24px; }
+.kavio-dashboard-brand img { width: 36px; height: 36px; object-fit: contain; }
+.kavio-dashboard-brand strong { font-size: 24px; letter-spacing: -.04em; }
+.kavio-dashboard-brand > span { margin-left: auto; font-size: 9px; letter-spacing: .13em; color: #687970; }
+.kavio-dashboard h2 { font-size: 21px; letter-spacing: -.035em; margin: 0 0 7px; }
+.kavio-dashboard h2 span { font-size: 17px; }
+.kavio-dashboard-tagline { color: #829087; font-size: 13px; margin: 0 0 30px; }
+.kavio-cash-card { position: relative; border-radius: 28px; background: linear-gradient(120deg,#132e51,#08192f); padding: 24px 18px; color: white; min-height: 180px; margin-bottom: 12px; }
+.kavio-cash-card > p { color: #adbdce; font-size: 13px; margin: 0 0 12px; }
+.kavio-cash-card > strong { font-size: 34px; }
+.kavio-cash-card > small { display: block; color: #a9bdcc; font-size: 11px; margin-top: 32px; }
+.kavio-cash-card img { position: absolute; right: -14px; bottom: 10px; width: 158px; height: 214px; object-fit: contain; }
+.kavio-cash-line { display: block; width: 24%; height: 3px; background: #4ec5a6; position: absolute; left: 42%; top: 85px; }
+.kavio-chart-card, .kavio-next { padding: 20px; background: white; border-radius: 26px; margin-top: 12px; }
+.kavio-chart-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.kavio-chart-heading h3 { font-size: 17px; margin: 0; }
+.kavio-chart-heading > span { font-size: 10px; color: #75857d; background: #f1f5f2; padding: 8px; border-radius: 20px; }
+.kavio-metrics { display: flex; justify-content: space-between; margin: 18px 0 10px; }
+.kavio-metrics p { color: #829087; font-size: 11px; margin: 0; }
+.kavio-metrics strong { display: block; color: #36b392; font-size: 15px; margin-top: 6px; }
+.kavio-metrics p:nth-child(2) strong { color: #0c2340; }
+.kavio-chart-card svg { width: 100%; display: block; }
+.kavio-insight { display: flex; align-items: center; gap: 14px; margin-top: 12px; padding: 18px; background: #e9fbf3; border-radius: 24px; }
+.kavio-insight > span { color: #42bd9f; font-size: 28px; }
+.kavio-insight strong { font-size: 14px; }
+.kavio-insight p { margin: 4px 0 0; color: #7a8c81; font-size: 12px; line-height: 1.5; }
+.kavio-next > strong { font-size: 14px; }
+.kavio-next p { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; padding-top: 12px; margin: 10px 0 0; border-top: 1px solid #edf1ee; }
+.kavio-next span { color: #278a70; }
+@media(max-width:640px) { .kavio-dashboard { padding: 20px; border-radius: 30px; } .kavio-cash-card img { width: 135px; right: -15px; } .kavio-cash-card > p { font-size: 12px; } .kavio-cash-card > small { font-size: 10px; } .kavio-chart-heading h3 { font-size: 15px; } }
+
+/* Kavio uses an in-flow header, so it needs no fixed-header spacer. */
+.kavio-page > main { padding-top: 0; }
+.kavio-page .kavio-hero { padding-top: 28px; padding-bottom: 64px; gap: 48px; }
+.kavio-page .kavio-dashboard { max-width: 400px; padding: 20px; border-radius: 30px; }
+.kavio-page .kavio-dashboard-brand { margin-bottom: 16px; }
+.kavio-page .kavio-dashboard-tagline { margin-bottom: 22px; }
+.kavio-page .kavio-cash-card { min-height: 154px; padding: 20px 16px; }
+.kavio-page .kavio-cash-card > small { margin-top: 24px; }
+.kavio-page .kavio-cash-card img { width: 135px; height: 185px; }
+.kavio-page .kavio-chart-card, .kavio-page .kavio-next { padding: 16px; }
+.kavio-page .kavio-chart-card svg { height: 86px; }
+.kavio-page .kavio-insight { padding: 14px; }
+.kavio-page .kavio-hero h1 { font-size: clamp(42px, 4.4vw, 64px); }
+.kavio-page .kavio-lead { font-size: 18px; line-height: 1.65; }
+@media (max-width: 640px) {
+  .kavio-page .kavio-hero { padding-top: 24px; padding-bottom: 48px; gap: 32px; }
+  .kavio-page .kavio-lead { font-size: 17px; }
+}
+
+/* Scale the preview and its layout footprint together. */
+@media (min-width: 901px) {
+  .kavio-page .kavio-dashboard { zoom: .75; }
+  .kavio-page .kavio-hero { padding-top: 12px; padding-bottom: 40px; }
+}
+@media (min-width: 641px) and (max-width: 900px) {
+  .kavio-page .kavio-dashboard { zoom: .8; }
+}
+
+.kavio-footer { max-width: 1184px; margin: 0 auto; padding: 32px 28px; border-top: 1px solid #dbe8df; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; }
+.kavio-footer-brand { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 700; }
+.kavio-footer-brand img { width: 36px; height: 36px; object-fit: contain; }
+.kavio-footer p { margin: 0; color: #587069; font-size: 14px; }
+.kavio-footer nav { margin-left: auto; display: flex; gap: 24px; font-size: 14px; }
+.kavio-footer small { flex-basis: 100%; color: #587069; font-size: 12px; }
+@media(max-width:640px) { .kavio-footer { padding: 28px 20px; gap: 16px; } .kavio-footer nav { margin-left: 0; flex-basis: 100%; } }
+
+/* Shared product-page rhythm and visual hierarchy. */
+.kavio-page .kavio-wrap { padding-top: 60px; padding-bottom: 60px; }
+.kavio-nav { border-bottom: 1px solid #dce8e1; padding-top: 20px; padding-bottom: 20px; }
+.kavio-nav-brand { display: flex; align-items: center; gap: 10px; }
+.kavio-nav .kavio-nav-brand img { width: 44px; height: 44px; object-fit: contain; }
+.kavio-nav-brand span { font-size: 25px; font-weight: 750; letter-spacing: -.04em; line-height: 1.1; }
+.kavio-nav-brand small { display: block; font-size: 10px; font-weight: 500; color: #647b73; letter-spacing: .02em; margin-top: 5px; }
+.kavio-page .kavio-hero { padding-top: 32px; padding-bottom: 40px; grid-template-columns: 1.1fr 1fr; }
+.kavio-hero > div:first-child { max-width: 550px; }
+.kavio-page .kavio-lead { max-width: 500px; }
+.kavio-preview-stage { position: relative; isolation: isolate; padding: 12px 0 0; }
+.kavio-preview-stage::before { content: ''; position: absolute; z-index: -1; pointer-events: none; inset: 2% -2% 8%; background: radial-gradient(ellipse at 48% 42%, rgba(84, 191, 155, .18) 0%, rgba(132, 211, 181, .11) 36%, rgba(176, 226, 204, .04) 57%, transparent 74%); }
+.kavio-preview-caption { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #3f7464; padding-top: 24px; }
+.kavio-page .kavio-adapts { grid-template-columns: 1.15fr 1fr 1fr; gap: 24px; align-items: stretch; }
+.kavio-adapts > div { align-self: center; padding-right: 12px; }
+.kavio-adapts h2 { font-size: clamp(30px, 3vw, 40px); }
+.kavio-page .kavio-adapts article { position: relative; overflow: hidden; background: white; border: 1px solid #dbe8df; padding: 26px; box-shadow: 0 8px 24px #163b3504; }
+.kavio-business-mascot { display: block; width: 125px; height: 125px; object-fit: contain; margin: 16px 0 12px; }
+.kavio-adapts h3 { margin-top: 12px; font-size: 22px; }
+.kavio-adapts article > p { font-size: 14px; line-height: 1.65; }
+.kavio-plan-grid { margin-top: 32px; }
+.kavio-plan-grid article { display: flex; flex-direction: column; padding: 26px; }
+.kavio-plan-mascot { height: 135px; }
+.kavio-plan-name { margin-top: 18px; }
+.kavio-plan-name span { display: block; margin-top: 5px; font-size: 11px; font-weight: 400; letter-spacing: .02em; opacity: .7; }
+.kavio-plan-grid h3 { font-size: 25px; margin-bottom: 12px; }
+.kavio-plan-grid p, .kavio-plan-grid li { font-size: 14px; line-height: 1.65; }
+.kavio-plan-grid ul { padding-left: 0; list-style: none; margin-top: 16px; margin-bottom: 24px; }
+.kavio-plan-grid li { position: relative; padding: 7px 0 7px 23px; }
+.kavio-plan-grid li::before { content: '✓'; position: absolute; left: 0; color: #299b7f; }
+.kavio-pro li::before { color: #70dbb9; }
+.kavio-plan-link { margin-top: auto; padding: 14px 0 0; border-top: 1px solid #dbe8df; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 14px; }
+.kavio-pro .kavio-plan-link { border-color: #ffffff30; }
+.kavio-plan-grid .kavio-plan-note { font-size: 12px; margin-top: 0; margin-bottom: 20px; }
+.kavio-ai { border-top: 1px solid #dbe8df; }
+.kavio-ai-steps { padding: 24px; background: #e4f2ea; border-radius: 28px; }
+.kavio-ai-mascot { width: 155px; height: 155px; }
+.kavio-ai-steps p { padding: 18px; margin: 12px 0 0; font-size: 14px; }
+.kavio-page .kavio-cta { background: #0c2340; color: white; border-radius: 30px; max-width: 1184px; margin: 28px auto 48px; padding: 48px 28px; }
+.kavio-cta .section-label { color: #7fdcc0; }
+.kavio-cta > p { color: #c2d3d4; }
+.kavio-cta h2 { font-size: clamp(28px,3vw,40px); }
+.kavio-cta .btn-primary { background: #b3f0d9; color: #0c2340; border-color: #b3f0d9; box-shadow: none; }
+.kavio-page a:focus-visible { outline: 3px solid #299b7f; outline-offset: 5px; }
+@media(max-width:900px) {
+ .kavio-page .kavio-adapts { grid-template-columns: 1fr 1fr; }
+ .kavio-adapts > div { grid-column: 1 / -1; }
+ .kavio-page .kavio-cta { margin-left: 20px; margin-right: 20px; }
+}
+@media(max-width:640px) {
+ .kavio-page .kavio-wrap { padding-top: 40px; padding-bottom: 40px; }
+ .kavio-page .kavio-hero, .kavio-page .kavio-adapts { grid-template-columns: 1fr; }
+ .kavio-preview-stage { padding-left: 8px; padding-right: 8px; }
+ .kavio-preview-stage::before { inset: 7% 0 10%; }
+ .kavio-nav nav { gap: 16px; }
+ .kavio-adapts article { min-height: 0; }
+ .kavio-business-mascot { float: right; width: 90px; height: 110px; margin: 0 0 10px 12px; }
+ .kavio-ai-steps { padding: 16px; }
+ .kavio-page .kavio-cta { padding: 36px 22px; }
+}
+
+.kavio-dashboard-screenshot { display: block; width: min(100%, 290px); height: auto; margin: 0 auto; border-radius: 24px; border: 1px solid #ffffff; box-shadow: 0 24px 60px #10294020; }
+@media (min-width: 901px) { .kavio-dashboard-screenshot { transform: perspective(1400px) rotateY(-7deg) rotateZ(2deg); } }
+
+.kavio-business-section { border-top: 1px solid #dbe8df; scroll-margin-top: 24px; }
+.kavio-business-heading { display: flex; justify-content: space-between; align-items: center; gap: 48px; margin-bottom: 28px; }
+.kavio-business-heading h2 { font-size: clamp(32px, 3.4vw, 44px); line-height: 1.15; letter-spacing: -.04em; margin: 16px 0 0; }
+.kavio-business-heading em { color: #239b83; font-style: normal; }
+.kavio-business-heading > p { max-width: 380px; color: #587069; line-height: 1.75; font-size: 15px; }
+.kavio-business-switch { display: inline-flex; gap: 6px; padding: 5px; border: 1px solid #d9e5df; border-radius: 999px; margin-bottom: 24px; background: #e8efea; }
+.kavio-business-switch button { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 13px 22px; border: 0; border-radius: 999px; background: transparent; color: #526b61; font: inherit; font-size: 14px; cursor: pointer; transition: background .18s, color .18s; }
+.kavio-business-switch button[aria-pressed=true] { background: #0c2340; color: white; box-shadow: 0 3px 8px #0c234018; }
+.kavio-business-switch button:focus-visible { outline: 3px solid #299b7f; outline-offset: 3px; }
+.kavio-business-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 44px 48px; background: linear-gradient(115deg, #0c2340, #133d45); border-radius: 28px; overflow: hidden; min-height: 345px; }
+.kavio-example-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #95dbc4; }
+.kavio-business-story h3 { font-size: clamp(28px,3vw,38px); letter-spacing: -.04em; line-height: 1.15; color: #fff; margin: 20px 0 16px; max-width: 350px; }
+.kavio-business-story > p { font-size: 15px; line-height: 1.75; color: #c0d4d6; max-width: 360px; }
+.kavio-business-signoff { display: flex; align-items: center; gap: 8px; color: #a6cfbf; font-size: 12px; margin-top: 28px; }
+.kavio-business-signoff > span { width: 6px; height: 6px; background: #63d7b1; border-radius: 50%; }
+.kavio-workspace-preview { position: relative; background: #f3f8f5; padding: 22px; border-radius: 20px; box-shadow: 0 20px 40px #0002; margin-right: 24px; }
+.kavio-workspace-heading { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; padding-bottom: 18px; }
+.kavio-workspace-heading img { width: 26px; height: 26px; }
+.kavio-workspace-dot { width: 6px; height: 6px; border-radius: 50%; background: #3eb88f; margin-left: auto; }
+.kavio-workspace-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kavio-workspace-tools > div { padding: 14px; background: #fff; border: 1px solid #e0ebe5; border-radius: 12px; }
+.kavio-tool-number { display: block; color: #459f82; font-size: 10px; margin-bottom: 10px; }
+.kavio-workspace-tools strong { display: block; font-size: 15px; }
+.kavio-workspace-tools small { display: block; color: #687d72; font-size: 11px; line-height: 1.5; margin-top: 5px; }
+.kavio-workspace-mascot { position: absolute; width: 125px; height: 150px; object-fit: contain; right: -66px; bottom: -35px; pointer-events: none; }
+@media(max-width:900px) { .kavio-business-showcase { gap: 30px; padding: 32px; } .kavio-business-heading { gap: 24px; } .kavio-workspace-preview { margin-right: 16px; } }
+@media(max-width:640px) { .kavio-business-heading { display: block; } .kavio-business-heading > p { margin-top: 20px; } .kavio-business-switch { display: flex; } .kavio-business-switch button { flex: 1; padding: 12px 10px; gap: 8px; font-size: 12px; } .kavio-business-showcase { grid-template-columns: 1fr; padding: 26px 22px 48px; gap: 28px; } .kavio-workspace-preview { padding: 16px; margin-right: 12px; } .kavio-workspace-mascot { width: 95px; height: 120px; right: -36px; bottom: -36px; } }
+
+/* Conventional document spacing, scoped to the privacy page. */
+.kavio-page > main.kavio-privacy { box-sizing: border-box; width: 100%; max-width: 896px; margin: 0 auto; padding: 48px 32px 80px; }
+.kavio-privacy h1 { font-size: clamp(32px, 4vw, 40px); line-height: 1.2; letter-spacing: -.03em; margin: 16px 0 24px; }
+.kavio-privacy p { font-size: 16px; line-height: 1.75; color: #4e655e; margin: 0 0 16px; }
+.kavio-privacy .section-label { font-size: 12px; }
+.kavio-privacy nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; margin: 32px 0; padding: 24px 0; border-block: 1px solid #dbe8df; }
+.kavio-privacy nav a { font-size: 14px; line-height: 1.5; }
+.kavio-privacy a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.kavio-privacy section { margin: 32px 0; scroll-margin-top: 24px; }
+.kavio-privacy h2 { font-size: 24px; line-height: 1.3; margin: 0 0 12px; }
+@media(max-width:600px) {
+ .kavio-page > main.kavio-privacy { padding: 32px 20px 56px; }
+ .kavio-privacy nav { grid-template-columns: 1fr; gap: 12px; }
+ .kavio-privacy h2 { font-size: 22px; }
+}
+
+.kavio-deletion ol { padding-left: 24px; margin: 16px 0; color: #4e655e; line-height: 1.75; }
+.kavio-deletion li { margin-bottom: 12px; padding-left: 4px; }
+.kavio-deletion-request { padding: 28px; background: #e8f1ec; border: 1px solid #dbe8df; border-radius: 18px; }
+.kavio-deletion .btn { text-decoration: none; margin: 8px 0 16px; }
+.kavio-deletion .kavio-deletion-hint { font-size: 14px; margin-bottom: 0; }
+.kavio-footer nav { flex-wrap: wrap; }
+@media(max-width:600px) { .kavio-deletion-request { padding: 20px; } }
