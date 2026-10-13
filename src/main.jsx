@@ -9,6 +9,7 @@ import BookingPage from './BookingPage.jsx';
 import ConnectPage from './ConnectPage.jsx';
 import KavioPage from './KavioPage.jsx';
 import AttendlyPage from './AttendlyPage.jsx';
+import NamadacwadPage from './NamadacwadPage.jsx';
 import KavioPrivacyPage from './KavioPrivacyPage.jsx';
 import KavioDeleteAccountPage from './KavioDeleteAccountPage.jsx';
 import '../styles.css';
@@ -24,8 +25,8 @@ const slugPage = ['/services', '/projects'].includes(cleanPath) ? cleanPath.slic
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      {!['/connect', '/attendly'].includes(cleanPath) && <JourneySignal />}
-      {cleanPath === '/attendly' ? <AttendlyPage /> : cleanPath === '/kavio/delete-account' ? <KavioDeleteAccountPage /> : cleanPath === '/kavio/privacy' ? <KavioPrivacyPage /> : cleanPath === '/kavio' ? <KavioPage /> : cleanPath === '/connect' ? <ConnectPage /> : isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
+      {!['/connect', '/attendly', '/namadacwad'].includes(cleanPath) && <JourneySignal />}
+      {cleanPath === '/namadacwad' ? <NamadacwadPage /> : cleanPath === '/attendly' ? <AttendlyPage /> : cleanPath === '/kavio/delete-account' ? <KavioDeleteAccountPage /> : cleanPath === '/kavio/privacy' ? <KavioPrivacyPage /> : cleanPath === '/kavio' ? <KavioPage /> : cleanPath === '/connect' ? <ConnectPage /> : isTeamPage ? <TeamPage /> : isInsightsPage ? <InsightsPage /> : isBookingPage ? <BookingPage /> : slugPage ? <SlugPage type={slugPage} /> : <App />}
     </QueryClientProvider>
   </React.StrictMode>,
 );
