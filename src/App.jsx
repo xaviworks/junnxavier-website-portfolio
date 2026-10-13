@@ -1,9 +1,17 @@
 import MobileNavigation from './MobileNavigation.jsx';
-import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react';
 import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles, Github, Linkedin, Facebook, Mail, MapPin } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { portfolioProjects, experience } from './portfolio.js';
+import './experience.css';
+
+const emailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=xaviadalid959%40gmail.com&su=Portfolio%20inquiry';
+const footerSocialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/xavi.adalid', icon: '/images/socials/facebook.svg' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/junnxavier/' },
+  { label: 'WhatsApp', href: 'https://wa.me/639946947889', icon: '/images/socials/whatsapp.svg' },
+];
 
 const partners = ['MCars', 'UAA', 'Ala Cino', 'Hipe', 'Melon Lemon', 'Behind The Work'];
 const profileLinks = [
@@ -15,21 +23,15 @@ function Button({ children, outline = false, href = '/get-started' }) {
   return <a className={`btn ${outline ? 'btn-secondary' : 'btn-primary'}`} href={href}>{children}</a>;
 }
 
-function CalculatorWidget() {
-  const values = ['12,480', '12,760', '13,240', '14,020'];
-  const [valueIndex, setValueIndex] = useState(0);
-  useEffect(() => {
-    const timer = window.setInterval(() => setValueIndex((current) => (current + 1) % values.length), 2200);
-    return () => window.clearInterval(timer);
-  }, [values.length]);
-  return <div className="calculator-widget" aria-label="Animated business calculation widget">
-    <div className="calculator-top"><span>Growth calculator</span><i>×</i></div>
-    <div className="calculator-display"><small>Projected output</small><strong>{values[valueIndex]}</strong><em>+12.8%</em></div>
-    <div className="calculator-keys" aria-hidden="true">
-      <b>7</b><b>8</b><b>9</b><b className="operator">÷</b>
-      <b>4</b><b>5</b><b>6</b><b className="operator">×</b>
-      <b>1</b><b>2</b><b>3</b><b className="operator">+</b>
-    </div>
+function AutomationWidget() {
+  const tools = [
+    { name: 'n8n', icon: 'n8n.svg' },
+    { name: 'Zapier', icon: 'icons8-zapier-48.png' },
+    { name: 'Power Automate', icon: 'icons8-microsoft-power-automate-2020-48.png' },
+  ];
+  return <div className="automation-widget" aria-label="My automation tools">
+    <span className="automation-widget-heading">Automation tools</span>
+    <ul>{tools.map((tool) => <li key={tool.name}><span className="automation-widget-icon"><img src={`/images/automation%20icons/${tool.icon}`} width="32" height="32" alt="" /></span><span>{tool.name}</span></li>)}</ul>
   </div>;
 }
 
@@ -352,7 +354,6 @@ function Hero() {
   const heroOpacity = useTransform(scrollY, [0, 520], [1, .2]);
   const widgetLeftY = useTransform(scrollY, [0, 520], [0, -72]);
   const widgetLeftRotate = useTransform(scrollY, [0, 520], [-5, -9]);
-  const widgetRightY = useTransform(scrollY, [0, 520], [0, -48]);
   const widgetDeadlineY = useTransform(scrollY, [0, 520], [0, -30]);
   const widgetFootY = useTransform(scrollY, [0, 520], [0, 42]);
   const widgetFootOpacity = useTransform(scrollY, [0, 520], [1, .35]);
@@ -360,7 +361,7 @@ function Hero() {
     <motion.div className="hero-art hero-art-left" style={{ y: widgetLeftY, rotate: widgetLeftRotate }} initial={{ scale: 0, opacity: 0, rotate: -12 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>
-      <div className="hero-identity"><img className="hero-portrait" src="/images/teams/xavier.jpeg" width="112" height="112" alt="Junn Xavier Adalid" fetchPriority="high" /><span className="hero-location"><MapPin size={12} aria-hidden="true" /> Davao City, Philippines</span></div>
+      <div className="hero-identity"><img className="hero-portrait" src="/images/teams/xavier.jpeg" width="176" height="176" alt="Junn Xavier Adalid" fetchPriority="high" /><span className="hero-location"><MapPin size={12} aria-hidden="true" /> Davao City, Philippines</span></div>
       <motion.p
         className="eyebrow eyebrow-reveal"
         aria-label="Full-Stack Developer · Automation · AI"
@@ -373,13 +374,11 @@ function Hero() {
       <h1 id="hero-title">I’m <span className="hero-name">Junn Xavier.</span><br />I Build Software <span className="hero-chip"><ArrowUpRight /></span> That W<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>rks.</h1>
       <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>I turn ideas into useful web and mobile apps — with thoughtful interfaces, practical automation, and AI that fits the task.</motion.p>
       <div className="hero-actions"><Button href="/#projects">Explore My Work <ArrowUpRight /></Button><Button outline href="/#contact">Let’s Talk <ArrowRight /></Button></div>
-      <ul className="hero-toolkit" aria-label="My core technologies">{['Laravel', 'React', 'Flutter', 'Python'].map((technology) => <li key={technology}>{technology}</li>)}</ul>
       <nav className="hero-profile-links" aria-label="My social profiles">{profileLinks.map(({ label, href, Icon }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer"><Icon className="profile-link-icon" size={20} aria-hidden="true" /><span>{label}</span><ArrowUpRight className="profile-link-arrow" size={16} aria-hidden="true" /></a>)}</nav>
     </motion.div>
     <motion.div className="hero-art hero-art-deadline" style={{ y: widgetDeadlineY }} initial={{ opacity: 0, x: 46, rotate: 8 }} animate={{ opacity: 1, x: 0, rotate: 0 }} transition={{ delay: .85, duration: .9, ease: [0.22, 1, 0.36, 1] }}><DeadlineWidget /></motion.div>
-    <motion.div className="hero-art hero-art-right" style={{ y: widgetRightY }} initial={{ opacity: 0, scale: .72, rotate: -7 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}><div className="hero-widget-stack"><CalculatorWidget /></div></motion.div>
     <motion.div className="hero-foot hero-foot-left" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, x: -46, scale: .92 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 1.15, duration: .95, ease: [0.22, 1, 0.36, 1] }}><PerformanceWidget /><strong>Full-Stack Development</strong><p>Laravel, React, Flutter, and Python.</p></motion.div>
-    <motion.div className="hero-foot hero-foot-right" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.45, duration: .95, ease: [0.22, 1, 0.36, 1] }}><strong>Automation & AI</strong><p>Connected workflows with APIs, n8n, and AI.</p></motion.div>
+    <motion.div className="hero-foot hero-foot-right" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.45, duration: .95, ease: [0.22, 1, 0.36, 1] }}><AutomationWidget /><strong>Automation & AI</strong><p>Connected workflows with APIs, n8n, and AI.</p></motion.div>
     </motion.section>;
 }
 
@@ -568,39 +567,24 @@ export function Advantage() {
 }
 
 export function Team() {
-  const [members, setMembers] = useState([]);
-  const [membersError, setMembersError] = useState('');
-  const [membersLoading, setMembersLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    Promise.resolve(experience)
-      .then((data) => {
-        if (!cancelled) setMembers(data);
-      })
-      .catch((error) => {
-        if (!cancelled) setMembersError(error.message);
-      })
-      .finally(() => {
-        if (!cancelled) setMembersLoading(false);
-      });
-    return () => { cancelled = true; };
-  }, []);
-
-  return <section className="section team" id="team" aria-labelledby="team-title">
+  const reducedMotion = useReducedMotion();
+  const roles = [...experience].sort((a, b) => b.startDate.localeCompare(a.startDate));
+  return <section className="section team experience-section" id="team" aria-labelledby="team-title">
     <div className="team-heading">
       <div>
         <p className="section-label">Experience</p>
         <h1 id="team-title">My work. My journey.</h1>
       </div>
-      <p className="section-copy">My experience spans platform development, automation, cross-platform apps, and teaching. I hold a BS in Information Technology from Brokenshire College (2022–2026).</p>
+      <p className="section-copy">A journey through software development, automation, and teaching.</p>
     </div>
-    {membersError ? <p className="api-status is-error" role="alert">Unable to load experience right now.</p> : membersLoading ? <p className="api-status">Loading experience…</p> : !members.length ? <p className="api-status">No experience listed yet.</p> : <div className="team-grid">
-      {members.map((member, index) => <motion.article className="team-member" key={member.number} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} viewport={{ once: false, amount: .18 }} transition={{ delay: index * .1, duration: .65, ease: [0.22, 1, 0.36, 1] }}>
-        <div className="team-member-photo"><img src={`/images/teams/${member.photo}`} alt={`${member.name}, ${member.designation}`} /></div>
-        <div className="team-member-copy"><h3>{member.name}</h3><p>{member.designation}</p><p>{member.bio}</p></div>
-      </motion.article>)}
-    </div>}
+    <ol className="experience-timeline" aria-label="My career timeline">
+      {roles.map((entry) => <motion.li className={`experience-entry ${entry.ongoing ? 'is-ongoing' : ''}`} key={entry.number} initial={reducedMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .5, ease: 'easeOut' }}>
+        <div className="experience-date"><time dateTime={entry.startDate}>{entry.period}</time><span>{entry.type}</span>{entry.ongoing && <span className="experience-current">Ongoing</span>}</div>
+        <span className="experience-node" aria-hidden="true"><i /></span>
+        <article className="experience-card"><header><div><p className="experience-mobile-date">{entry.period} · {entry.type}</p><h2>{entry.name}</h2><p className="experience-role">{entry.role}</p></div><div className={`experience-company-logo logo-${entry.number}`}><img src={`/images/company%20logo/${encodeURIComponent(entry.logo)}`} alt={`${entry.name} logo`} width="160" height="56" loading="lazy" /></div></header><div className="experience-meta"><MapPin size={13} aria-hidden="true" /><span>{entry.location}</span>{entry.ongoing && <span className="experience-card-status">Ongoing</span>}</div><p className="experience-description">{entry.bio}</p><ul className="experience-skills" aria-label={`${entry.name} focus areas`}>{entry.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul></article>
+      </motion.li>)}
+    </ol>
+    <div className="experience-timeline-end"><span aria-hidden="true">✦</span><p>Still learning. Still building.</p><a href="/#projects">Explore my projects <ArrowUpRight size={16} aria-hidden="true" /></a></div>
   </section>;
 }
 
@@ -639,44 +623,36 @@ export function ContactForm() {
 }
 
 export function Footer() {
-  const [showContactForm, setShowContactForm] = useState(false);
-
   return <>
     <motion.section className="section partners" id="partners" aria-labelledby="partners-title" initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .16 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <motion.div className="partnership-invite" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .3 }} transition={{ duration: .75, ease: 'easeOut' }}>
-        <p className="section-label">Partnerships</p>
-        <h2 id="partners-title">Open to Collaboration<span className="partnership-orb-target" aria-hidden="true" /></h2>
-        <p className="section-copy">Have a product, integration, or workflow in mind? I welcome conversations about development projects, technical roles, and opportunities to teach or collaborate.</p>
-        <a className="btn btn-primary partnership-button" href="/get-started">Start a Conversation <ArrowRight /></a>
+        <p className="section-label">Opportunities</p>
+        <h2 id="partners-title">Let’s work together.<span className="partnership-orb-target" aria-hidden="true" /></h2>
+        <p className="section-copy">I’m open to software development roles, freelance projects, and teaching opportunities. If my experience fits what you’re building, let’s connect.</p>
+        <a className="btn btn-primary partnership-button" href="/#contact">Contact Me <ArrowRight /></a>
       </motion.div>
     </motion.section>
     <motion.section className="cta cta-blueprint" id="contact" aria-labelledby="cta-title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .7, ease: 'easeOut' }}>
       <div className="cta-blueprint-copy">
-        <motion.p className="section-label cta-label" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Have something in mind?</motion.p>
-        <motion.h2 id="cta-title" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Let’s build software that <span>solves real pr<span className="journey-destination">o</span>blems.</span></motion.h2>
-        <motion.p className="cta-copy" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Tell me about your project or opportunity. I bring hands-on experience in Laravel, Python, Flutter, React, APIs, and AI integrations.</motion.p>
+        <motion.p className="section-label cta-label" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .16, duration: .7, ease: 'easeOut' }}>Get in touch</motion.p>
+        <motion.h2 id="cta-title" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .22, duration: .9, ease: [0.22, 1, 0.36, 1] }}>Have a project or <span><span className="journey-destination">o</span>pportunity in mind?</span></motion.h2>
+        <motion.p className="cta-copy" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .32, duration: .8, ease: 'easeOut' }}>Tell me what you’re working on and how I can help.</motion.p>
         <motion.div className="cta-actions" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .42, duration: .8, ease: 'easeOut' }}>
-          <button className="btn btn-primary cta-button" type="button" onClick={() => setShowContactForm((current) => !current)} aria-expanded={showContactForm} aria-controls="cta-contact-form"><AnimatePresence mode="wait" initial={false}><motion.span key={showContactForm ? 'back' : 'build'} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: .18, ease: 'easeOut' }}>{showContactForm ? 'Back to workflow' : 'Build Better Together'}</motion.span></AnimatePresence> <ArrowRight /></button>
-          <span>Strategy <i /> Systems <i /> Automation</span>
+          <a className="btn btn-primary cta-button" href={emailComposeUrl} target="_blank" rel="noopener noreferrer">Send Me an Email <Mail size={18} aria-hidden="true" /></a><a className="contact-email-fallback" href="mailto:xaviadalid959@gmail.com?subject=Portfolio%20inquiry">Use my email app instead <ArrowUpRight size={13} aria-hidden="true" /></a>
         </motion.div>
       </div>
-      <AnimatePresence mode="wait" initial={false}>
-      {showContactForm ? <motion.div key="contact-form" id="cta-contact-form" className="cta-blueprint-panel cta-form-panel" aria-label="Project inquiry form" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: .3, ease: 'easeOut' }}>
-        <div className="cta-panel-header"><div><span className="cta-panel-kicker">Start a conversation</span><strong>Tell me about your project</strong></div></div>
-        <p className="section-copy">This form opens a draft in your email app. You can also email <a href="mailto:xaviadalid959@gmail.com">xaviadalid959@gmail.com</a> directly.</p><ContactForm />
-      </motion.div> : <motion.div key="workflow" className="cta-blueprint-panel" aria-label="How Junn Xavier Adalid turns business challenges into working systems" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 14 }} transition={{ duration: .3, ease: 'easeOut' }}>
-        <div className="cta-panel-header"><div><span className="cta-panel-kicker">My workflow</span><strong>From challenge to solution</strong></div><span className="cta-panel-status"><b /> Ready to start</span></div>
-        <ol className="cta-steps">
-          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .52, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">01</span><div><h3>Understand the challenge</h3><p>Identify the work slowing your team down.</p></div><span className="cta-step-mark">↗</span></motion.li>
-          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .64, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">02</span><div><h3>Design the system</h3><p>Connect the right workflow, data, and automation.</p></div><span className="cta-step-mark">↗</span></motion.li>
-          <motion.li className="cta-step" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .76, duration: .55, ease: 'easeOut' }}><span className="cta-step-number">03</span><div><h3>Build for growth</h3><p>Ship a system your team can improve over time.</p></div><span className="cta-step-mark">✓</span></motion.li>
-        </ol>
-        <div className="cta-panel-footer"><span>From system design to deployment</span><span className="cta-panel-line" aria-hidden="true"><i /></span></div>
-      </motion.div>}
-      </AnimatePresence>
+      <motion.div className="cta-blueprint-panel portfolio-contact-panel" aria-label="My contact details" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .6, ease: 'easeOut' }}>
+        <div className="cta-panel-header"><div><span className="cta-panel-kicker">Let’s connect</span><strong>Find me here.</strong></div></div>
+        <dl className="portfolio-contact-details">
+          <div><dt><Mail size={16} aria-hidden="true" /> Email</dt><dd><a href="mailto:xaviadalid959@gmail.com">xaviadalid959@gmail.com</a></dd></div>
+          <div><dt><MapPin size={16} aria-hidden="true" /> Location</dt><dd>Davao City, Philippines</dd></div>
+          <div><dt><Github size={16} aria-hidden="true" /> GitHub</dt><dd><a href="https://github.com/xaviworks" target="_blank" rel="noopener noreferrer">xaviworks <ArrowUpRight size={14} aria-hidden="true" /></a></dd></div>
+          <div><dt><Linkedin size={16} aria-hidden="true" /> LinkedIn</dt><dd><a href="https://www.linkedin.com/in/junnxavier/" target="_blank" rel="noopener noreferrer">Junn Xavier Adalid <ArrowUpRight size={14} aria-hidden="true" /></a></dd></div>
+        </dl>
+      </motion.div>
     </motion.section>
     <motion.footer className="footer" aria-label="Junn Xavier Adalid site footer" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .14 }} transition={{ duration: .7, ease: 'easeOut', delay: .12 }}>
-      <div className="footer-brand"><div className="footer-logo"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></div><p>Full-stack development, Python automation, and AI integrations. Based in Davao City, Philippines.</p><h4>Connect with me</h4><div className="socials"><a href="https://github.com/xaviworks" aria-label="Junn Xavier Adalid on GitHub"><Github /></a><a href="https://www.linkedin.com/in/junnxavier" aria-label="Junn Xavier Adalid on LinkedIn"><Linkedin /></a><a href="mailto:xaviadalid959@gmail.com" aria-label="Junn Xavier Adalid by email"><Mail /></a><a href="https://api.whatsapp.com/send?phone=639946947889" aria-label="Contact Junn Xavier Adalid on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.2-4.1A8.5 8.5 0 1 1 20.5 11.5Z" fill="#25D366" /><path d="M8.5 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .4-.1.6l-.6.7c.7 1.3 1.7 2.3 3 3l.7-.6c.2-.2.4-.2.6-.1l1.9.8c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.5.3-1.2.4-1.8.2-2.1-.6-4.2-2.5-5.6-4.3-1-.9-1.8-2-2.2-3.1-.2-.7-.1-1.3.1-1.8Z" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></a></div></div><div className="footer-column"><h4>About Me</h4><a href="/about">My Background</a><a href="/services">My Approach</a><a href="/#services">Business Solutions</a><a href="/#contact">Opportunities</a></div><div className="footer-column"><h4>Skills</h4><a href="/#services">Python & Automation</a><a href="/#services">APIs & AI Integration</a><a href="/#services">Flutter & Mobile Apps</a><a href="/#services">Laravel & React</a><a href="/#services">Databases & Cloud</a></div><div className="footer-column"><h4>Projects</h4><a href="/#projects">E-commerce Systems</a><a href="/#projects">Client Portals</a><a href="/#projects">Operations Dashboards</a><a href="/#projects">Enterprise Resource Planning</a><a href="/#partners">Collaboration</a></div><div className="footer-bottom"><span>© 2026 Junn Xavier Adalid. All rights reserved.</span><span><a href="/#contact">Contact Me</a><a href="https://github.com/xaviworks">GitHub</a></span></div><div className="footer-watermark">XAVI</div>
+      <div className="footer-brand"><div className="footer-logo"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></div><p>Full-stack development, Python automation, and AI integrations. Based in Davao City, Philippines.</p><h4>Connect with me</h4><div className="socials">{footerSocialLinks.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`Connect with me on ${link.label}`} title={link.label}>{link.icon ? <img src={link.icon} width="22" height="22" alt="" /> : <Linkedin size={22} aria-hidden="true" />}</a>)}</div></div><div className="footer-column"><h4>About Me</h4><a href="/about">My Background</a><a href="/services">My Approach</a><a href="/#services">Business Solutions</a><a href="/#contact">Opportunities</a></div><div className="footer-column"><h4>Skills</h4><a href="/#services">Python & Automation</a><a href="/#services">APIs & AI Integration</a><a href="/#services">Flutter & Mobile Apps</a><a href="/#services">Laravel & React</a><a href="/#services">Databases & Cloud</a></div><div className="footer-column"><h4>Projects</h4><a href="/kavio">Kavio</a><a href="/attendly">Attendly</a><a href="/namadacwad">NAMADACWAD UMIS</a><a href="/#projects">Xendra Workspace</a><a href="/#projects">View All Projects</a></div><div className="footer-bottom"><span>© 2026 Junn Xavier Adalid. All rights reserved.</span><span><a href="/#contact">Contact Me</a><a href="https://github.com/xaviworks">GitHub</a></span></div><div className="footer-watermark">XAVI</div>
     </motion.footer>
   </>;
 }
@@ -713,5 +689,5 @@ export default function App() {
     document.addEventListener('click', useSectionAnchor);
     return () => document.removeEventListener('click', useSectionAnchor);
   }, []);
-  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><MobileNavigation /><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Skills</a><a href="/projects">Projects</a><a href="/about">About Me</a><a href="/insights">Insights</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Me</a><a className="btn btn-primary" href="/get-started">Let’s Talk <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
+  return <div className="page-shell"><motion.header className="topbar" style={{ opacity: headerOpacity, visibility: headerVisibility, boxShadow: useTransform(shadow, [0, 1], ['0 0 0 rgba(0,0,0,0)', '0 8px 24px rgba(0,0,0,.05)']) }}><div className="topbar-inner"><MobileNavigation /><div className="header-spacer" /><div className="header-main"><a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a><nav className="nav-links" aria-label="Primary navigation"><a href="/services">Skills</a><a href="/projects">Projects</a><a href="/about">About Me</a></nav></div><div className="header-fill" /><div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Me</a><a className="btn btn-primary" href="/get-started">Let’s Talk <ArrowRight /></a></div><div className="header-spacer" /></div></motion.header><main id="main-content"><Hero /><IntroSection /><Projects /><Advantage /><Footer /></main></div>;
 }

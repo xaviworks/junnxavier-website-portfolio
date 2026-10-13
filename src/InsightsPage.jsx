@@ -44,7 +44,6 @@ export default function InsightsPage() {
             <a href="/services">Skills</a>
             <a href="/projects">Projects</a>
             <a href="/about">About Me</a>
-            <a className="is-current" href="/insights" aria-current="page">Insights</a>
           </nav>
         </div>
         <div className="header-fill" />

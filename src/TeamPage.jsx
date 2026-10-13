@@ -13,7 +13,7 @@ export default function TeamPage() {
     const description = document.querySelector('meta[name="description"]');
     const canonical = document.querySelector('link[rel="canonical"]');
     description?.setAttribute('content', 'The background and experience of Junn Xavier Adalid, full-stack developer and IT instructor in Davao City.');
-    canonical?.setAttribute('href', `${window.location.origin}/team`);
+    canonical?.setAttribute('href', `${window.location.origin}/about`);
   }, []);
 
   return <div className="page-shell team-page">
@@ -26,7 +26,6 @@ export default function TeamPage() {
             <a href="/services">Skills</a>
             <a href="/projects">Projects</a>
             <a className="is-current" href="/about" aria-current="page">About Me</a>
-            <a href="/insights">Insights</a>
           </nav>
         </div>
         <div className="header-fill" />

@@ -10,7 +10,7 @@ function PageHeader({ activePage }) {
       <div className="header-main">
         <a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a>
         <nav className="nav-links" aria-label="Primary navigation">
-          <a className={activePage === 'services' ? 'is-current' : undefined} href="/services" aria-current={activePage === 'services' ? 'page' : undefined}>Skills</a><a className={activePage === 'projects' ? 'is-current' : undefined} href="/projects" aria-current={activePage === 'projects' ? 'page' : undefined}>Projects</a><a href="/about">About Me</a><a href="/insights">Insights</a>
+          <a className={activePage === 'services' ? 'is-current' : undefined} href="/services" aria-current={activePage === 'services' ? 'page' : undefined}>Skills</a><a className={activePage === 'projects' ? 'is-current' : undefined} href="/projects" aria-current={activePage === 'projects' ? 'page' : undefined}>Projects</a><a href="/about">About Me</a>
         </nav>
       </div>
       <div className="header-fill" />

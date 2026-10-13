@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
-const links = [['Skills', '/services'], ['Projects', '/projects'], ['About Me', '/about'], ['Insights', '/insights']];
+const links = [['Skills', '/services'], ['Projects', '/projects'], ['About Me', '/about']];
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);

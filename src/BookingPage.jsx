@@ -11,7 +11,7 @@ function PageHeader() {
       <div className="header-spacer" />
       <div className="header-main">
         <a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a>
-        <nav className="nav-links" aria-label="Primary navigation"><a href="/services">Skills</a><a href="/projects">Projects</a><a href="/about">About Me</a><a href="/insights">Insights</a></nav>
+        <nav className="nav-links" aria-label="Primary navigation"><a href="/services">Skills</a><a href="/projects">Projects</a><a href="/about">About Me</a></nav>
       </div>
       <div className="header-fill" />
       <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call" aria-current="page">Contact Me</a><a className="btn btn-primary" href="/#contact">Let’s Talk <ArrowRight /></a></div>

@@ -1,0 +1,67 @@
+.experience-section .team-heading { flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #e7edf6; }
+.experience-section .team-heading .section-copy { max-width: 680px; margin: 0; padding: 0; color: #66758a; font-size: 16px; line-height: 1.65; }
+.experience-section .experience-timeline { position: relative; max-width: 1184px; margin: 0 auto; padding: 0; list-style: none; }
+.experience-timeline::before { position: absolute; top: 30px; bottom: 30px; left: 226px; width: 2px; content: ''; background: linear-gradient(#9bbdff, #dce8fb 80%, #edf3fb); }
+.experience-entry { position: relative; display: grid; grid-template-columns: 188px 40px minmax(0, 1fr); column-gap: 18px; align-items: start; padding-bottom: 28px; }
+.experience-entry:last-child { padding-bottom: 0; }
+.experience-date { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; padding-top: 22px; text-align: right; }
+.experience-date time { color: #354c6c; font-size: 13px; font-weight: 700; }
+.experience-date > span { color: #7b8799; font-size: 11px; }
+.experience-date .experience-current { display: inline-flex; align-items: center; gap: 5px; margin-top: 3px; padding: 5px 9px; border: 1px solid #d5e7fb; border-radius: 999px; background: #f0f6ff; color: #235bc8; font-size: 10px; }
+.experience-current::before { width: 5px; height: 5px; border-radius: 50%; background: #3376ff; content: ''; }
+.experience-node { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; margin-top: 18px; border: 1px solid #e2ebf9; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px #fff; }
+.experience-node i { width: 10px; height: 10px; border-radius: 50%; background: #a9bddb; }
+.is-ongoing .experience-node { border-color: #c4d8ff; background: #f5f9ff; }
+.is-ongoing .experience-node i { background: #3376ff; box-shadow: 0 0 0 5px #3376ff10; }
+.experience-card { padding: 28px; border: 1px solid #e1eaf8; border-radius: 24px; background: #fff; box-shadow: 0 12px 32px #1c2f5305; transition: border-color .2s ease, box-shadow .2s ease; }
+.experience-card:hover { border-color: #c6d9fa; box-shadow: 0 16px 36px #1c2f530b; }
+.is-ongoing .experience-card { border-color: #d0dfff; background: linear-gradient(120deg, #f9fbff, #fff 55%); }
+.experience-card > header { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.experience-section .experience-card h2 { margin: 0 0 7px; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.2; letter-spacing: -.035em; color: #173354; }
+.experience-card .experience-role { margin: 0; color: #3376ff; font-size: 14px; font-weight: 650; line-height: 1.5; }
+.experience-company-logo { display: grid; place-items: center; flex: 0 0 160px; width: 160px; height: 64px; padding: 6px; border-radius: 12px; background: #fff; }
+.experience-company-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.experience-company-logo.logo-02, .experience-company-logo.logo-05 { width: 60px; flex-basis: 60px; }
+.experience-company-logo.logo-05 { padding: 0; overflow: hidden; }
+.experience-company-logo.logo-05 img { object-fit: cover; }
+.experience-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 15px; color: #7a8799; font-size: 11px; }
+.experience-card-status { display: none; }
+.experience-card .experience-description { max-width: 650px; margin: 16px 0 20px; color: #66758a; font-size: 14px; line-height: 1.8; }
+.experience-skills { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.experience-skills li { padding: 6px 10px; border: 1px solid #e2ebf8; border-radius: 999px; background: #f5f8fd; color: #537093; font-size: 11px; line-height: 1.4; }
+.experience-mobile-date { display: none; }
+.experience-timeline-end { max-width: 1184px; margin: 34px auto 0; padding: 24px 0 0 264px; border-top: 1px solid #e7edf6; }
+.experience-timeline-end > span { color: #3376ff; font-size: 20px; }
+.experience-timeline-end p { margin: 8px 0 12px; font-family: 'Bricolage Grotesque', sans-serif; color: #344e72; font-size: 20px; font-weight: 650; letter-spacing: -.025em; }
+.experience-timeline-end a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: #235bc8; font-size: 13px; font-weight: 600; }
+@media (max-width: 900px) {
+  .experience-entry { grid-template-columns: 140px 32px minmax(0, 1fr); column-gap: 14px; }
+  .experience-timeline::before { left: 169px; }
+  .experience-node { width: 32px; height: 32px; margin-top: 22px; }
+  .experience-date time { font-size: 11px; }
+  .experience-card { padding: 22px; }
+  .experience-card > header { align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+  .experience-company-logo { justify-content: start; }
+  .experience-timeline-end { padding-left: 200px; }
+}
+@media (max-width: 600px) {
+  .experience-section .team-heading { gap: 14px; margin-bottom: 24px; padding-bottom: 22px; }
+  .experience-section .team-heading .section-copy { font-size: 14px; }
+  .experience-entry { grid-template-columns: 24px minmax(0, 1fr); gap: 14px; padding-bottom: 20px; }
+  .experience-date { display: none; }
+  .experience-timeline::before { left: 11px; }
+  .experience-node { width: 24px; height: 24px; margin-top: 22px; }
+  .experience-node i { width: 7px; height: 7px; }
+  .experience-card { padding: 20px; border-radius: 20px; }
+  .experience-card > header { gap: 16px; }
+  .experience-company-logo { order: -1; width: 135px; flex-basis: 135px; height: 46px; padding: 0; }
+  .experience-company-logo.logo-02, .experience-company-logo.logo-05 { flex-basis: 46px; width: 46px; }
+  .experience-card > header > div:first-child { width: 100%; }
+  .experience-mobile-date { display: block; margin: 0 0 10px; color: #72849c; font-size: 10px; line-height: 1.5; }
+  .experience-section .experience-card h2 { font-size: 22px; }
+  .experience-card .experience-role { font-size: 13px; }
+  .experience-card .experience-description { font-size: 13px; line-height: 1.75; }
+  .experience-card-status { display: inline-block; margin-left: 6px; color: #235bc8; }
+  .experience-skills li { font-size: 10px; padding: 5px 8px; }
+  .experience-timeline-end { padding-left: 38px; }
+}
