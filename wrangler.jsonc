@@ -1,14 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "xnr-landing-page",
+  "name": "junnxavier-website-portfolio",
   "compatibility_date": "2026-08-07",
-  "pages_build_output_dir": "dist",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "xnr-landing-db",
-      "database_id": "f4e4492b-83a5-48cc-ab48-e742eb8d7b36",
-      "migrations_dir": "migrations"
-    }
-  ]
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
 }
