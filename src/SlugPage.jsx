@@ -8,20 +8,20 @@ function PageHeader({ activePage }) {
     <div className="topbar-inner"><MobileNavigation />
       <div className="header-spacer" />
       <div className="header-main">
-        <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>
+        <a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a>
         <nav className="nav-links" aria-label="Primary navigation">
-          <a className={activePage === 'services' ? 'is-current' : undefined} href="/services" aria-current={activePage === 'services' ? 'page' : undefined}>Services</a><a className={activePage === 'projects' ? 'is-current' : undefined} href="/projects" aria-current={activePage === 'projects' ? 'page' : undefined}>Projects</a><a href="/team">Team</a><a href="/insights">Insights</a>
+          <a className={activePage === 'services' ? 'is-current' : undefined} href="/services" aria-current={activePage === 'services' ? 'page' : undefined}>Skills</a><a className={activePage === 'projects' ? 'is-current' : undefined} href="/projects" aria-current={activePage === 'projects' ? 'page' : undefined}>Projects</a><a href="/about">About Me</a><a href="/insights">Insights</a>
         </nav>
       </div>
       <div className="header-fill" />
-      <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/#contact">Get Started <ArrowRight /></a></div>
+      <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Me</a><a className="btn btn-primary" href="/#contact">Let’s Talk <ArrowRight /></a></div>
       <div className="header-spacer" />
     </div>
   </header>;
 }
 
 export default function SlugPage({ type }) {
-  const titles = { services: 'Services', projects: 'Projects' };
+  const titles = { services: 'Skills', projects: 'Projects' };
   useLayoutEffect(() => {
     const target = document.getElementById(type === 'projects' ? 'projects' : 'services');
     const frame = window.requestAnimationFrame(() => {
@@ -31,8 +31,8 @@ export default function SlugPage({ type }) {
     return () => window.cancelAnimationFrame(frame);
   }, [type]);
   useEffect(() => {
-    document.title = `${titles[type]} | XNR IT Solutions`;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', type === 'services' ? 'Custom software, business systems, and workflow automation services from XNR IT Solutions.' : 'Explore systems and automation projects built by XNR IT Solutions.');
+    document.title = `${titles[type]} | Junn Xavier Adalid`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', type === 'services' ? 'Full-stack development, Python automation, API integration, and AI capabilities of Junn Xavier Adalid.' : 'Explore systems and automation projects built by Junn Xavier Adalid.');
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `${window.location.origin}/${type}`);
   }, [type]);
 

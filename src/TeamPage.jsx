@@ -9,10 +9,10 @@ export default function TeamPage() {
   }, []);
 
   useEffect(() => {
-    document.title = 'Our Team | XNR IT Solutions';
+    document.title = 'About Me | Junn Xavier Adalid';
     const description = document.querySelector('meta[name="description"]');
     const canonical = document.querySelector('link[rel="canonical"]');
-    description?.setAttribute('content', 'Meet the people behind XNR IT Solutions: a focused team building custom software, connected business systems, and workflow automation.');
+    description?.setAttribute('content', 'The background and experience of Junn Xavier Adalid, full-stack developer and IT instructor in Davao City.');
     canonical?.setAttribute('href', `${window.location.origin}/team`);
   }, []);
 
@@ -21,16 +21,16 @@ export default function TeamPage() {
       <div className="topbar-inner"><MobileNavigation />
         <div className="header-spacer" />
         <div className="header-main">
-          <a className="logo" href="/" aria-label="XNR IT Solutions home"><img src="/assets/xnr-logo.png" alt="XNR IT Solutions" /></a>
+          <a className="logo" href="/" aria-label="Junn Xavier Adalid home"><img src="/assets/junn-xavier.svg" alt="Junn Xavier Adalid" /></a>
           <nav className="nav-links" aria-label="Primary navigation">
-            <a href="/services">Services</a>
+            <a href="/services">Skills</a>
             <a href="/projects">Projects</a>
-            <a className="is-current" href="/team" aria-current="page">Team</a>
+            <a className="is-current" href="/about" aria-current="page">About Me</a>
             <a href="/insights">Insights</a>
           </nav>
         </div>
         <div className="header-fill" />
-        <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Sales</a><a className="btn btn-primary" href="/#contact">Get Started <ArrowRight /></a></div>
+        <div className="topbar-actions"><a className="btn btn-secondary" href="/book-a-call">Contact Me</a><a className="btn btn-primary" href="/#contact">Let’s Talk <ArrowRight /></a></div>
         <div className="header-spacer" />
       </div>
     </header>

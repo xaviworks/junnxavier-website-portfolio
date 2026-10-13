@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
-const links = [['Services', '/services'], ['Projects', '/projects'], ['Team', '/team'], ['Insights', '/insights']];
+const links = [['Skills', '/services'], ['Projects', '/projects'], ['About Me', '/about'], ['Insights', '/insights']];
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);
@@ -44,8 +44,8 @@ export default function MobileNavigation() {
     }}>
       <div className="mobile-menu-links">{links.map(([label, href]) => <a key={href} href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}<ArrowRight aria-hidden="true" /></a>)}</div>
       <div className="mobile-menu-actions">
-        <a className="btn btn-secondary" href="/book-a-call" aria-current={currentPath === '/book-a-call' ? 'page' : undefined}>Contact Sales</a>
-        <a className="btn btn-primary" href="/#contact">Get Started <ArrowRight aria-hidden="true" /></a>
+        <a className="btn btn-secondary" href="/book-a-call" aria-current={currentPath === '/book-a-call' ? 'page' : undefined}>Contact Me</a>
+        <a className="btn btn-primary" href="/#contact">Let’s Talk <ArrowRight aria-hidden="true" /></a>
       </div>
     </nav>
   </div>;

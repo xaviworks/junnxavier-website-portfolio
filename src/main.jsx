@@ -13,7 +13,7 @@ import KavioDeleteAccountPage from './KavioDeleteAccountPage.jsx';
 import '../styles.css';
 
 const queryClient = new QueryClient();
-const isTeamPage = window.location.pathname.replace(/\/+$/, '') === '/team';
+const isTeamPage = window.location.pathname.replace(/\/+$/, '') === '/team' || window.location.pathname.replace(/\/+$/, '') === '/about';
 const isInsightsPage = window.location.pathname.replace(/\/+$/, '') === '/insights';
 const isBookingPage = window.location.pathname.replace(/\/+$/, '') === '/book-a-call';
 const cleanPath = window.location.pathname.replace(/\/+$/, '') || '/';
