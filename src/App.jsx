@@ -1,11 +1,16 @@
 import MobileNavigation from './MobileNavigation.jsx';
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
-import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, MousePointer2, Sparkles, Github, Linkedin, Facebook, Mail, MapPin } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { portfolioProjects, experience } from './portfolio.js';
 
 const partners = ['MCars', 'UAA', 'Ala Cino', 'Hipe', 'Melon Lemon', 'Behind The Work'];
+const profileLinks = [
+  { label: 'GitHub', href: 'https://github.com/xaviworks', Icon: Github },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/junnxavier/', Icon: Linkedin },
+  { label: 'Facebook', href: 'https://www.facebook.com/xavi.adalid', Icon: Facebook },
+];
 function Button({ children, outline = false, href = '/get-started' }) {
   return <a className={`btn ${outline ? 'btn-secondary' : 'btn-primary'}`} href={href}>{children}</a>;
 }
@@ -355,6 +360,7 @@ function Hero() {
     <motion.div className="hero-art hero-art-left" style={{ y: widgetLeftY, rotate: widgetLeftRotate }} initial={{ scale: 0, opacity: 0, rotate: -12 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 400, damping: 18, delay: .6 }}><BrowserCard /></motion.div>
     <motion.div className="hero-copy" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, ease: 'easeOut', delay: .2 }}>
       <div className="hero-sparkles"><Sparkles /><Sparkles /></div>
+      <div className="hero-identity"><img className="hero-portrait" src="/images/teams/xavier.jpeg" width="112" height="112" alt="Junn Xavier Adalid" fetchPriority="high" /><span className="hero-location"><MapPin size={12} aria-hidden="true" /> Davao City, Philippines</span></div>
       <motion.p
         className="eyebrow eyebrow-reveal"
         aria-label="Full-Stack Developer · Automation · AI"
@@ -364,14 +370,15 @@ function Hero() {
       >
         <span>FULL-STACK DEVELOPER · AUTOMATION · AI</span>
       </motion.p>
-      <h1 id="hero-title">I’m Junn Xavier.<br />I Build Software <span className="hero-chip"><ArrowUpRight /></span> That W<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>rks.</h1>
-      <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>Full-stack developer in Davao City, building web and mobile apps, Python automation, and AI integrations.</motion.p>
-      <div className="hero-actions"><Button href="/get-started">Let’s Talk <ArrowRight /></Button><Button outline href="/projects">Explore My Work</Button></div>
+      <h1 id="hero-title">I’m <span className="hero-name">Junn Xavier.</span><br />I Build Software <span className="hero-chip"><ArrowUpRight /></span> That W<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>rks.</h1>
+      <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>I turn ideas into useful web and mobile apps — with thoughtful interfaces, practical automation, and AI that fits the task.</motion.p>
+      <div className="hero-actions"><Button href="/#projects">Explore My Work <ArrowUpRight /></Button><Button outline href="/#contact">Let’s Talk <ArrowRight /></Button></div>
+      <ul className="hero-toolkit" aria-label="My core technologies">{['Laravel', 'React', 'Flutter', 'Python'].map((technology) => <li key={technology}>{technology}</li>)}</ul>
+      <nav className="hero-profile-links" aria-label="My social profiles">{profileLinks.map(({ label, href, Icon }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer"><Icon className="profile-link-icon" size={20} aria-hidden="true" /><span>{label}</span><ArrowUpRight className="profile-link-arrow" size={16} aria-hidden="true" /></a>)}</nav>
     </motion.div>
     <motion.div className="hero-art hero-art-deadline" style={{ y: widgetDeadlineY }} initial={{ opacity: 0, x: 46, rotate: 8 }} animate={{ opacity: 1, x: 0, rotate: 0 }} transition={{ delay: .85, duration: .9, ease: [0.22, 1, 0.36, 1] }}><DeadlineWidget /></motion.div>
     <motion.div className="hero-art hero-art-right" style={{ y: widgetRightY }} initial={{ opacity: 0, scale: .72, rotate: -7 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}><div className="hero-widget-stack"><CalculatorWidget /></div></motion.div>
     <motion.div className="hero-foot hero-foot-left" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, x: -46, scale: .92 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 1.15, duration: .95, ease: [0.22, 1, 0.36, 1] }}><PerformanceWidget /><strong>Full-Stack Development</strong><p>Laravel, React, Flutter, and Python.</p></motion.div>
-    <motion.div className="hero-foot hero-foot-center" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, y: 42, rotateX: 18 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 1.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}><BrowserCard type="focus" /></motion.div>
     <motion.div className="hero-foot hero-foot-right" style={{ y: widgetFootY, opacity: widgetFootOpacity }} initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.45, duration: .95, ease: [0.22, 1, 0.36, 1] }}><strong>Automation & AI</strong><p>Connected workflows with APIs, n8n, and AI.</p></motion.div>
     </motion.section>;
 }
@@ -463,7 +470,7 @@ export function Projects() {
       <div className="gallery-track" ref={galleryRef} aria-live="polite"><motion.div ref={trackInnerRef} className="gallery-track-inner" initial={false} animate={{ x: trackX }} transition={{ type: 'spring', stiffness: 110, damping: 24, mass: 1.1 }}>{loopedProjects.map((project, index) => {
         const leftIndex = activeIndex - 1;
         const rightIndex = activeIndex + 1;
-        const projectHref = project.title.trim().toLowerCase() === 'kavio' ? '/kavio' : null;
+        const projectHref = { kavio: '/kavio', attendly: '/attendly' }[project.title.trim().toLowerCase()] || null;
         return <motion.article data-carousel-index={index} initial={false} className={`gallery-project ${index === activeIndex ? 'is-active' : ''} ${index === leftIndex ? 'is-left' : ''} ${index === rightIndex ? 'is-right' : ''}`} key={`${project.number}-${index}`}>
           <div className="gallery-project-art" aria-hidden="true"><span className="gallery-window-dots"><i></i><i></i><i></i></span><span className="gallery-art-line line-one"></span><span className="gallery-art-line line-two"></span><span className="gallery-art-block block-one"></span><span className="gallery-art-block block-two"></span><span className="gallery-art-block block-three"></span></div>
           <div className="gallery-project-content"><div className="gallery-project-meta"><span>{project.number}</span><small>Accomplishment</small><ArrowUpRight size={17} strokeWidth={2.2} /></div><h3>{project.title}</h3><p>{project.body}</p><div className="project-tech-stack"><h4>Tech stack</h4><ul aria-label={`${project.title} tech stack`}>{project.techStack.map((technology) => <li key={technology}>{technology}</li>)}</ul></div></div>

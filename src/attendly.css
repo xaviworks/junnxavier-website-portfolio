@@ -1,0 +1,40 @@
+/* Attendly shares Kavio's product-page layout, with its own scoped brand colors. */
+.attendly-page { background: #f5f8f7; color: #123d35; }
+.attendly-page .btn-primary, .attendly-page .kavio-pro { background: #0b594b; border-color: #0b594b; }
+.attendly-page .btn-primary { gap: 9px; color: #fff; }
+.attendly-page .btn-primary .attendly-playstore-logo { display: block; width: 24px; height: 24px; flex-shrink: 0; object-fit: contain; }
+.attendly-page h1 em, .attendly-page h2 em { color: #168572; font-style: normal; }
+.attendly-page .kavio-example-label { color: #49786b; }
+.attendly-page .kavio-business-switch button[aria-pressed="true"] { background: #0b594b; }
+.attendly-page .kavio-nav-brand img { width: 48px; height: 48px; object-fit: contain; background: #0b594b; border-radius: 12px; }
+.attendly-page .kavio-footer-brand img { background: #0b594b; border-radius: 8px; }
+.attendly-page .kavio-cta > p { max-width: 650px; margin-inline: auto; }
+.attendly-back { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; color: #587069; font-size: 13px; }
+.attendly-phone { display: block; width: min(100%, 280px); height: auto; margin-inline: auto; border: 6px solid #fff; border-radius: 28px; box-shadow: 0 24px 55px #123d3518; }
+.attendly-page .attendly-phone.kavio-dashboard-screenshot { width: min(100%, 300px); max-height: none; object-fit: contain; }
+.attendly-journey, .attendly-gallery-layout { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 70px; margin-top: 38px; padding: 38px; border: 1px solid #dbe8df; border-radius: 30px; background: #eaf4ee; }
+.attendly-journey-image { width: min(100%, 250px); }
+.attendly-journey .kavio-business-story h3 { color: #123d35; }
+.attendly-journey .kavio-business-story > p { color: #587069; }
+.attendly-steps { display: grid; gap: 12px; margin: 26px 0 0; padding: 0; list-style: none; }
+.attendly-steps li { display: flex; align-items: center; gap: 14px; font-size: 15px; }
+.attendly-steps li > span { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: #d3e9df; color: #0b594b; font-size: 11px; font-weight: 700; }
+.attendly-feature-grid article > svg { color: #168572; }
+.attendly-feature-grid .kavio-pro > svg { color: #b1edda; }
+.attendly-gallery-copy h3 { font-size: clamp(25px, 3vw, 38px); line-height: 1.2; letter-spacing: -.035em; }
+.attendly-gallery-copy p { max-width: 420px; color: #587069; line-height: 1.75; }
+.attendly-gallery-controls { display: flex; gap: 10px; margin-top: 26px; }
+.attendly-gallery-controls button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #c8ded4; border-radius: 50%; background: #fff; color: #0b594b; cursor: pointer; }
+.attendly-gallery-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.attendly-gallery-tabs button { padding: 9px 14px; border: 1px solid #c8ded4; border-radius: 999px; background: transparent; color: #0b594b; font: inherit; font-size: 13px; cursor: pointer; }
+.attendly-gallery-tabs button[aria-pressed="true"] { background: #0b594b; border-color: #0b594b; color: white; }
+.attendly-tech { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+.attendly-tech li { padding: 8px 12px; border: 1px solid #d1e3da; border-radius: 999px; background: #eaf4ee; font-size: 13px; }
+@media(max-width: 700px) {
+  .attendly-page .kavio-nav { gap: 12px; flex-wrap: wrap; }
+  .attendly-page .kavio-nav nav { gap: 16px; }
+  .attendly-journey, .attendly-gallery-layout { grid-template-columns: 1fr; gap: 30px; padding: 24px 18px; }
+  .attendly-gallery-copy { order: 2; }
+  .attendly-page .kavio-actions .btn { font-size: 15px; }
+  .attendly-page .kavio-footer { align-items: flex-start; }
+}

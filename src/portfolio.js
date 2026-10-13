@@ -52,7 +52,7 @@ export const portfolioProjects = [
   },
   {
     number: '11', title: 'ATTENDLY',
-    body: 'Built an attendance system for students and staff with generated QR codes, exportable reports, and real-time monitoring.',
+    body: 'Built and published BC Attendly on Google Play: an event attendance app for Brokenshire College with QR check-in/check-out, evaluations, and exportable reports.',
     techStack: ['Flutter / Dart', 'Firebase Auth', 'Cloud Firestore', 'QR Code Generation'],
   },
   {
