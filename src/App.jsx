@@ -371,7 +371,7 @@ function Hero() {
       >
         <span>FULL-STACK DEVELOPER · AUTOMATION · AI</span>
       </motion.p>
-      <h1 id="hero-title">I’m <span className="hero-name">Junn Xavier.</span><br />I Build Software <span className="hero-chip"><ArrowUpRight /></span> That W<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>rks.</h1>
+      <h1 id="hero-title">I’m <span className="hero-name">Junn Xavier.</span>{' '}<span className="hero-statement">I build useful s<span className="journey-origin">o<span className="journey-origin-orb" aria-hidden="true"><i /></span></span>ftware.</span></h1>
       <motion.p id="hero-description" className="hero-text" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .5, delay: .4 }}>I turn ideas into useful web and mobile apps — with thoughtful interfaces, practical automation, and AI that fits the task.</motion.p>
       <div className="hero-actions"><Button href="/#projects">Explore My Work <ArrowUpRight /></Button><Button outline href="/#contact">Let’s Talk <ArrowRight /></Button></div>
       <nav className="hero-profile-links" aria-label="My social profiles">{profileLinks.map(({ label, href, Icon }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer"><Icon className="profile-link-icon" size={20} aria-hidden="true" /><span>{label}</span><ArrowUpRight className="profile-link-arrow" size={16} aria-hidden="true" /></a>)}</nav>
